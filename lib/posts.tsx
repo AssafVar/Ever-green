@@ -6,7 +6,6 @@ import html from 'remark-html';
 
 
 const postsDirectory = path.join(process.cwd(), 'posts');
-console.log(postsDirectory);
 export function getSortedPostsData() {
   // Get file names under /posts
   const fileNames: string[] = fs.readdirSync(postsDirectory);
@@ -24,7 +23,7 @@ export function getSortedPostsData() {
     // Combine the data with the id
     return {
       id,
-      ...matterResult.data,
+      ...(matterResult.data as { date: string; title: string }),
     };
   });
   // Sort posts by date
@@ -78,6 +77,6 @@ export async function getPostData(id) {
   return {
     id,
     contentHtml,
-    ...matterResult.data,
+    ...(matterResult.data as { date: string; title: string }),
   };
 }
