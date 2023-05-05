@@ -7,11 +7,13 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.12",
+    "axios": "^1.4.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
     "graphql": "^16.6.0",
     "gray-matter": "^4.0.3",
     "next": "latest",
+    "pg": "^8.10.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "remark": "^14.0.2",
