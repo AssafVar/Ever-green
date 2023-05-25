@@ -3,8 +3,8 @@
 import { INovel } from "@/typings";
 import { useQuery } from "@apollo/client";
 import React from "react";
-import { GET_NOVELS } from "../graphql/queries";
-import QueryResult from "./query-result";
+import { GET_NOVELS } from "../../graphql/queries";
+import QueryResult from "../query-result";
 
 
 function Novels() {
