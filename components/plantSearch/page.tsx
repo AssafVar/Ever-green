@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styles from "../Input.module.css";
 
 const PlantSearch = () => {
   const [name, setName] = useState("");
@@ -12,7 +13,7 @@ const PlantSearch = () => {
           <input
             type="text"
             value={name}
-            className="mx-3 border-2 rounded-lg border-gray-300"
+            className={styles.inputSearch}
             onChange={(event) => {
                 setName(event.target.value);
             }}
@@ -23,6 +24,7 @@ const PlantSearch = () => {
           <input
             type="text"
             value={family}
+            className={styles.inputSearch}
             onChange={(event) => {
                 setFamily(event.target.value);
             }}
