@@ -14,20 +14,23 @@ const REGISTER_LIST = [
 ];
 
 const Navbar = () => {
+
+  const [currentUrl, setCurrentUrl] = useState("Home");
+  
   return (
     <>
         <div className="flex justify-between">
           <div className="flex mr-auto ml-6">
             {MENU_LIST.map((menu) => (
-              <div key={menu.text}>
-                <NavItem {...menu} />
+              <div key={menu.text} className={menu.text===currentUrl ? "p-4 text-indigo-700" : "p-4 text-indigo-950"}>
+                <NavItem text={menu.text} href={menu.href} setUrl={()=>setCurrentUrl(menu.text)} />
               </div>
             ))}
           </div>
           <div className="flex mr-6">
             {REGISTER_LIST.map((menu) => (
-              <div key={menu.text}>
-                <NavItem {...menu} />
+              <div key={menu.text} className={menu.text===currentUrl ? "p-4 text-indigo-700" : "p-4 text-indigo-950"}>
+                <NavItem text={menu.text} href={menu.href} setUrl={()=>setCurrentUrl(menu.text)} />
               </div>
             ))}
           </div>
