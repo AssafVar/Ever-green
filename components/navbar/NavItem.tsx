@@ -4,14 +4,12 @@ import React from "react";
 const NavItem = ({
   text,
   href,
-  setUrl
 }: {
   text: string;
   href: string;
-  setUrl: any;
 }) => {
   return (
-    <Link href={href} onClick={()=>setUrl(text)}>
+    <Link href={href} >
       {text}
     </Link>
   );
