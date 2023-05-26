@@ -23,14 +23,14 @@ const Navbar = () => {
         <div className="flex justify-between">
           <div className="flex mr-auto ml-6">
             {MENU_LIST.map((menu) => (
-              <div key={menu.text} className={menu.href===path ? "p-4 text-orange-400" : "p-4 text-indigo-950"}>
+              <div key={menu.text} className={menu.href===path ? "p-4 text-orange-400" : "p-4"}>
                 <NavItem {...menu} />
               </div>
             ))}
           </div>
           <div className="flex mr-6">
             {REGISTER_LIST.map((menu) => (
-              <div key={menu.text} className={menu.href===path ? "p-4 text-orange-400" : "p-4 text-indigo-950"}>
+              <div key={menu.text} className={menu.href===path ? "p-4 text-orange-400" : "p-4"}>
               <NavItem text={menu.text} href={menu.href}  />
               </div>
             ))}

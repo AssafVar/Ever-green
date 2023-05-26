@@ -1,13 +1,16 @@
 "use client";
 
 import Layout from "@/components/layout/layout";
+import { Providers } from "@/components/Providers";
 import React from "react";
 
 const page = () => {
   return (
-    <Layout >
-      <div>login</div>
-    </Layout>
+    <Providers>
+      <Layout>
+        <div>login</div>
+      </Layout>
+    </Providers>
   );
 };
 
