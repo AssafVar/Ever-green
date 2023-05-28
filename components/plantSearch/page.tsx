@@ -10,15 +10,15 @@ import SearchIcon from "@mui/icons-material/Search";
 import Checkbox from "@mui/material/Checkbox";
 import { getPlants } from "@/lib/trefle";
 
-const PlantSearch = () => {
+const PlantSearch = ({updatePlants}:any) => {
   const [name, setName] = useState("");
   const [family, setFamily] = useState("");
   const [checkCommonName, setCheckCommonName] = useState(true);
   const [checkFamily, setCheckFamily] = useState(true);
 
   const fetchPlant = async () =>{
-    const response = await getPlants();
-    console.log(response);
+    const response: any = await getPlants();
+    updatePlants(response.data);
   }
   return (
     <div className="flex flex-row">
