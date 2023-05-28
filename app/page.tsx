@@ -26,8 +26,8 @@ export default function Home() {
             <PlantSearch updatePlants={updatePlants}/>
             <div className="border-b-4 border-gray-400"></div>
             <PlantsCards plantsList={plantsList}/>
-            <Novels />
-          </Container>
+{/*             <Novels />
+ */}          </Container>
         </Layout>
       </Providers>
     </main>

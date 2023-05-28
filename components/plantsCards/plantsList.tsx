@@ -16,7 +16,7 @@ const PlantsList = ({plantsList}:PlantDetails[] | any) => {
     <div>
       <h1>Plants Cards</h1>
       <Box sx={{ minHeight: 829 }}>
-      <MasonryContainer columns={3} spacing={2}>
+      <MasonryContainer >
       {plantsList && plantsList.map((item:PlantDetails)=>(
         <div key={item.id}>
             <PlantCard details={item}/>

@@ -1,11 +1,8 @@
 "use client";
 import "./globals.css";
-import { Inter } from "next/font/google";
 import { theme } from "./theme/themes";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { Providers } from "@/components/Providers";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
