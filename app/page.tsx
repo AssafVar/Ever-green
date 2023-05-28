@@ -7,6 +7,7 @@ import PlantSearch from "@/components/plantSearch/page";
 import "../styles/globals.css";
 import "tailwindcss/tailwind.css";
 import { Container } from "@mui/material";
+import PlantsCards from "@/components/plantsCards/plantsList";
 
 export default function Home() {
   return (
@@ -16,8 +17,8 @@ export default function Home() {
           <Container>
             <PlantSearch />
             <div className="border-b-4 border-gray-400"></div>
+            <PlantsCards/>
             <Novels />
-            
           </Container>
         </Layout>
       </Providers>

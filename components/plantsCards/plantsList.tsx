@@ -1,0 +1,212 @@
+import { Box } from "@mui/material";
+import React from "react";
+import PlantCard from "./plantCard";
+import Masonry from '@mui/lab/Masonry';
+import styled from "@emotion/styled";
+
+const MasonryContainer = styled('div')({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+  gap: '16px',
+});
+
+const PlantsList = ({props}) => {
+  const cards = [
+    {
+      author: "Lam.",
+      bibliography: "Encycl. 1: 723 (1785)",
+      common_name: "Evergreen oak",
+      family: "Fagaceae",
+      family_common_name: null,
+      genus: "Quercus",
+      genus_id: 3519,
+      id: 77116,
+      image_url:
+        "https://d2seqvvyy3b8p2.cloudfront.net/40ab8e7cdddbe3e78a581b84efa4e893.jpg",
+      links: {
+        self: "/api/v1/species/quercus-rotundifolia",
+        plant: "/api/v1/plants/quercus-rotundifolia",
+        genus: "/api/v1/genus/quercus",
+      },
+      rank: "species",
+      scientific_name: "Quercus rotundifolia",
+      slug: "quercus-rotundifolia",
+      status: "accepted",
+      synonyms: [
+        "Quercus ilex var. oleoides",
+        "Quercus ilex subvar. rotundifolia",
+        "Quercus ilex f. macrophylla",
+        "Quercus ilex f. oleoides",
+        "Quercus ilex var. calicina",
+        "Quercus ilex subsp. rotundifolia",
+        "Quercus lyauteyi",
+        "Quercus ballota var. rotundifolia",
+        "Quercus ilex f. brevicupulata",
+        "Quercus ilex subvar. major",
+        "Quercus ilex var. pendula",
+        "Quercus rotundifolia f. dolichocalyx",
+        "Quercus calicina",
+        "Quercus rotundifolia f. pilosella",
+        "Quercus rotundifolia f. macrocarpa",
+        "Quercus ilex var. rotundifolia",
+        "Quercus sugaro",
+        "Quercus ilex subvar. pendula",
+        "Quercus ilex f. pendula",
+        "Quercus ilex f. ballota",
+        "Quercus ilex f. rotundifolia",
+        "Quercus ilex subvar. minor",
+        "Quercus ballota",
+        "Quercus ilex var. ballota",
+        "Quercus ilex f. calicina",
+        "Quercus ilex var. microcarpa",
+        "Quercus rotundifolia f. calicina",
+        "Quercus ilex f. macrocarpa",
+        "Quercus rotundifolia f. brevicupulata",
+        "Quercus rotundifolia var. macrocarpa",
+        "Quercus ilex var. brevicupulata",
+        "Quercus ilex subsp. ballota",
+        "Quercus ilex var. dolichocalyx",
+        "Quercus rotundifolia var. pilosella",
+        "Quercus rotundifolia var. brevicupulata",
+        "Quercus rotundifolia subsp. maghrebiana",
+      ],
+      year: 1785,
+    },
+    {
+      author: "Lam.",
+      bibliography: "Encycl. 1: 723 (1785)",
+      common_name: "Evergreen oak",
+      family: "Fagaceae",
+      family_common_name: null,
+      genus: "Quercus",
+      genus_id: 3519,
+      id: 77116,
+      image_url:
+        "https://d2seqvvyy3b8p2.cloudfront.net/40ab8e7cdddbe3e78a581b84efa4e893.jpg",
+      links: {
+        self: "/api/v1/species/quercus-rotundifolia",
+        plant: "/api/v1/plants/quercus-rotundifolia",
+        genus: "/api/v1/genus/quercus",
+      },
+      rank: "species",
+      scientific_name: "Quercus rotundifolia",
+      slug: "quercus-rotundifolia",
+      status: "accepted",
+      synonyms: [
+        "Quercus ilex var. oleoides",
+        "Quercus ilex subvar. rotundifolia",
+        "Quercus ilex f. macrophylla",
+        "Quercus ilex f. oleoides",
+        "Quercus ilex var. calicina",
+        "Quercus ilex subsp. rotundifolia",
+        "Quercus lyauteyi",
+        "Quercus ballota var. rotundifolia",
+        "Quercus ilex f. brevicupulata",
+        "Quercus ilex subvar. major",
+        "Quercus ilex var. pendula",
+        "Quercus rotundifolia f. dolichocalyx",
+        "Quercus calicina",
+        "Quercus rotundifolia f. pilosella",
+        "Quercus rotundifolia f. macrocarpa",
+        "Quercus ilex var. rotundifolia",
+        "Quercus sugaro",
+        "Quercus ilex subvar. pendula",
+        "Quercus ilex f. pendula",
+        "Quercus ilex f. ballota",
+        "Quercus ilex f. rotundifolia",
+        "Quercus ilex subvar. minor",
+        "Quercus ballota",
+        "Quercus ilex var. ballota",
+        "Quercus ilex f. calicina",
+        "Quercus ilex var. microcarpa",
+        "Quercus rotundifolia f. calicina",
+        "Quercus ilex f. macrocarpa",
+        "Quercus rotundifolia f. brevicupulata",
+        "Quercus rotundifolia var. macrocarpa",
+        "Quercus ilex var. brevicupulata",
+        "Quercus ilex subsp. ballota",
+        "Quercus ilex var. dolichocalyx",
+        "Quercus rotundifolia var. pilosella",
+        "Quercus rotundifolia var. brevicupulata",
+        "Quercus rotundifolia subsp. maghrebiana",
+      ],
+      year: 1785,
+    },
+    {
+      author: "Lam.",
+      bibliography: "Encycl. 1: 723 (1785)",
+      common_name: "Evergreen oak",
+      family: "Fagaceae",
+      family_common_name: null,
+      genus: "Quercus",
+      genus_id: 3519,
+      id: 77116,
+      image_url:
+        "https://d2seqvvyy3b8p2.cloudfront.net/40ab8e7cdddbe3e78a581b84efa4e893.jpg",
+      links: {
+        self: "/api/v1/species/quercus-rotundifolia",
+        plant: "/api/v1/plants/quercus-rotundifolia",
+        genus: "/api/v1/genus/quercus",
+      },
+      rank: "species",
+      scientific_name: "Quercus rotundifolia",
+      slug: "quercus-rotundifolia",
+      status: "accepted",
+      synonyms: [
+        "Quercus ilex var. oleoides",
+        "Quercus ilex subvar. rotundifolia",
+        "Quercus ilex f. macrophylla",
+        "Quercus ilex f. oleoides",
+        "Quercus ilex var. calicina",
+        "Quercus ilex subsp. rotundifolia",
+        "Quercus lyauteyi",
+        "Quercus ballota var. rotundifolia",
+        "Quercus ilex f. brevicupulata",
+        "Quercus ilex subvar. major",
+        "Quercus ilex var. pendula",
+        "Quercus rotundifolia f. dolichocalyx",
+        "Quercus calicina",
+        "Quercus rotundifolia f. pilosella",
+        "Quercus rotundifolia f. macrocarpa",
+        "Quercus ilex var. rotundifolia",
+        "Quercus sugaro",
+        "Quercus ilex subvar. pendula",
+        "Quercus ilex f. pendula",
+        "Quercus ilex f. ballota",
+        "Quercus ilex f. rotundifolia",
+        "Quercus ilex subvar. minor",
+        "Quercus ballota",
+        "Quercus ilex var. ballota",
+        "Quercus ilex f. calicina",
+        "Quercus ilex var. microcarpa",
+        "Quercus rotundifolia f. calicina",
+        "Quercus ilex f. macrocarpa",
+        "Quercus rotundifolia f. brevicupulata",
+        "Quercus rotundifolia var. macrocarpa",
+        "Quercus ilex var. brevicupulata",
+        "Quercus ilex subsp. ballota",
+        "Quercus ilex var. dolichocalyx",
+        "Quercus rotundifolia var. pilosella",
+        "Quercus rotundifolia var. brevicupulata",
+        "Quercus rotundifolia subsp. maghrebiana",
+      ],
+      year: 1785,
+    },
+  ];
+  return (
+    <div>
+      <h1>Plants Cards</h1>
+      <Box sx={{ minHeight: 829 }}>
+      <MasonryContainer columns={3} spacing={2}>
+      {cards && cards.map((item, index)=>(
+        <div key={index}>
+            <PlantCard details={item}/>
+        </div>
+      ))}
+      </MasonryContainer>
+      </Box>
+    </div>
+  );
+};
+
+export default PlantsList;
