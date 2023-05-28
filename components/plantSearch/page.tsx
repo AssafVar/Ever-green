@@ -1,17 +1,14 @@
 import {
   Box,
   Button,
-  Container,
   FormControlLabel,
   TextField,
   Tooltip,
-  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import Checkbox from "@mui/material/Checkbox";
-
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
+import { getPlants } from "@/lib/trefle";
 
 const PlantSearch = () => {
   const [name, setName] = useState("");
@@ -19,6 +16,10 @@ const PlantSearch = () => {
   const [checkCommonName, setCheckCommonName] = useState(true);
   const [checkFamily, setCheckFamily] = useState(true);
 
+  const fetchPlant = async () =>{
+    const response = await getPlants();
+    console.log(response);
+  }
   return (
     <div className="flex flex-row">
       <div className="flex-column basis-3/4 mr-10">
@@ -39,7 +40,7 @@ const PlantSearch = () => {
                 checked={checkFamily}
               />
             }
-            label="Common name"
+            label="Family name"
           />
         </Box>
         <Box>
@@ -81,7 +82,7 @@ const PlantSearch = () => {
           )}
           <div className="flex my-4 ">
             <Tooltip title="Search for your plant">
-              <Button variant="text" className="ml-auto mr-6 ">
+              <Button variant="text" className="ml-auto mr-6 " onClick={fetchPlant}>
                 <SearchIcon />
               </Button>
             </Tooltip>
