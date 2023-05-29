@@ -16,3 +16,13 @@ export const GET_NOVELS = gql`
     }
   }
 `;
+export const INSERT_SEARCH = gql`
+  mutation InsertSearch ($userId: String!, $searchCode: String, $searchString: String){
+    insertSearch(userId: $userId, searchCode: $searchCode, searchString: $searchString) {
+      id
+      userId
+      searchCode
+      searchString
+    }
+  }
+`;

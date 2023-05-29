@@ -1,6 +1,5 @@
 import React from 'react';
 import { Typography } from "@mui/material";
-import { Box } from "@mui/system";
 
 const PreviousSearch = ({createNewSearch}:any) => {
   const searchList = [

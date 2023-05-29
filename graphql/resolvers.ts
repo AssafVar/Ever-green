@@ -103,7 +103,7 @@ export const resolvers = {
         },
       });
     },
-    addLastSearch: async (_: any, args: any, context: any) => {
+    insertSearch: async (_: any, args: any, context: any) => {
       try {
         return await context.prisma.lastSearch.create({
           data: {
@@ -116,13 +116,15 @@ export const resolvers = {
         console.log(err);
       }
     },
+    /*
     deleteLastSearch: async (_: any, args: any, context: Context) => {
       return await context.prisma.lastSearch.delete({
         where: {
           id: args.id,
         },
       });
-    },
+    }, 
+    */
   },
   Novel: {
     authors: async (parent: any, __: any, context: Context) => {

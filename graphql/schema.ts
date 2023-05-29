@@ -46,7 +46,7 @@ export const typeDefs = `#graphql
     addUser (firstName:String, lastName:String, password:String, email:String, role:String) : User
     updateUser (id:ID!, firstName:String, lastName:String, email:String, role:String) : User
     deleteUser (id:ID!) : User
-    addLastSearch (userId:String, searchCode:String, searchString:String) : LastSearch
+    insertSearch (userId:String, searchCode:String, searchString:String) : LastSearch
     deleteLastSearch (id:ID!) : LastSearch
   }
 `;
