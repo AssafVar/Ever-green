@@ -13,6 +13,8 @@ import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { getPlants } from "@/lib/trefle";
 import ArrowDropDownCircleIcon from "@mui/icons-material/ArrowDropDownCircle";
+import { useMutation } from "@apollo/client";
+import { INSERT_SEARCH } from "@/graphql/queries";
 
 const searchItems = [
   { name: "Common Name", value: "common_name", key: "1" },
@@ -26,6 +28,21 @@ const SearchBar = ({ updatePlants }: any) => {
     name: searchItems[0].name,
     value: searchItems[0].value,
   });
+const [insertSearch, { loading, error, data }] = useMutation(INSERT_SEARCH);
+
+const handleNewSearch = async(item:{value:string, name:string}) => {
+  try{
+    const response = await insertSearch({
+      variables:{
+        userId:'12',
+        searchCode: item.value,
+        searchString: item.name,
+      }
+    });
+  }catch(err) {
+    console.log(err);
+  }
+}
 
   const fetchPlant = async () => {
     const response: any = await getPlants({
@@ -33,10 +50,10 @@ const SearchBar = ({ updatePlants }: any) => {
       name
     });
     updatePlants(response.data);
+    handleNewSearch({value: searchItem.value, name})
   };
   const handleChange = (event: SelectChangeEvent) => {
     const { value, name } = JSON.parse(event.target.value);
-    console.log(name, value);
     setSearchItem({ ...searchItem, name, value });
   };
 
