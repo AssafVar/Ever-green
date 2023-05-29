@@ -21,7 +21,7 @@ const searchItems = [
 ];
 
 
-const PlantSearch = ({ updatePlants }: any) => {
+const SearchBar = ({ updatePlants }: any) => {
   const [name, setName] = useState("");
   const [searchItem, setSearchItem] = useState(searchItems[0].name);
 
@@ -90,11 +90,8 @@ const PlantSearch = ({ updatePlants }: any) => {
           </Tooltip>
         </Box>
       </div>
-      <div className="flex mr-12 pt-4 basis-1/4 border-2 my-10 ml-5 rounded-lg border-green-700">
-        <h3 className="px-4"> Previous Search</h3>
-      </div>
     </div>
   );
 };
 
-export default PlantSearch;
+export default SearchBar;

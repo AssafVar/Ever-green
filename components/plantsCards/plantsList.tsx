@@ -7,7 +7,8 @@ import PlantDetails from "./plantDetails";
 const MasonryContainer = styled('div')({
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-  gap: '16px',
+  gap: '5px',
+  justifyItems: 'center'
 });
 
 const PlantsList = ({plantsList}:PlantDetails[] | any) => {
