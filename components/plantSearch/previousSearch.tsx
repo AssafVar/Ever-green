@@ -14,6 +14,8 @@ const PreviousSearch = ({createNewSearch}:any) => {
       {searchList.length && searchList.map(item=>(
         <div key={item.id} onClick={()=>createNewSearch(item)} >
             <Typography>{item.name}</Typography>
+            <Typography>{item.value}</Typography>
+
         </div>
       ))}
     </div>

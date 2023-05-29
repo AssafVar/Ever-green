@@ -27,10 +27,10 @@ model User {
   password  String
   role      String
   createdAt DateTime @default(now())
-  lastSearch LastSearch[]
+  search Search[]
 }
 
-model LastSearch {
+model Search {
   id String @id @default(uuid())
   userId String
   searchCode String

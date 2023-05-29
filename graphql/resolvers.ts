@@ -105,7 +105,7 @@ export const resolvers = {
     },
     insertSearch: async (_: any, args: any, context: any) => {
       try {
-        return await context.prisma.lastSearch.create({
+        return await context.prisma.search.create({
           data: {
             userId: args.userId,
             searchCode: args.searchCode,
@@ -117,8 +117,8 @@ export const resolvers = {
       }
     },
     /*
-    deleteLastSearch: async (_: any, args: any, context: Context) => {
-      return await context.prisma.lastSearch.delete({
+    deleteSearch: async (_: any, args: any, context: Context) => {
+      return await context.prisma.search.delete({
         where: {
           id: args.id,
         },
@@ -136,8 +136,8 @@ export const resolvers = {
     },
   },
   User: {
-    lastSearch: async (parent: any, __: any, context: Context) => {
-      return await context.prisma.lastSearch.findMany({
+    search: async (parent: any, __: any, context: Context) => {
+      return await context.prisma.search.findMany({
         where: {
           userId: parent.id,
         },
