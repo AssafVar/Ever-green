@@ -26,3 +26,13 @@ export const INSERT_SEARCH = gql`
     }
   }
 `;
+export const GET_SEARCHES = gql`
+  query Searches ($userId: String!) {
+    searches(userId: $userId) {
+      id
+      userId
+      searchCode
+      searchString
+    }
+  }
+`

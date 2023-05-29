@@ -26,6 +26,13 @@ export const resolvers = {
         },
       });
     },
+    searches: async (_:any, args:any, context:Context) => {
+      return await context.prisma.search.findMany({
+        where: {
+          userId: args.userId,
+        },
+      });
+    }
   },
   Mutation: {
     addNovel: async (_: any, args: any, context: Context) => {

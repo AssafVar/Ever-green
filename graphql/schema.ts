@@ -36,7 +36,7 @@ export const typeDefs = `#graphql
     novel(id:ID!): Novel
     users: [User]
     user(id:ID!): User
-    searches: [Search]
+    searches(userId:String!): [Search]
   }
   type Mutation {
     addNovel (image: String, title: String): Novel
