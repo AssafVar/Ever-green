@@ -9,32 +9,37 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { getPlants } from "@/lib/trefle";
 import ArrowDropDownCircleIcon from "@mui/icons-material/ArrowDropDownCircle";
 
 const searchItems = [
-  { name: "Common Name", value: "common_name" },
-  { name: "family", value: "family" },
-  { name: "genus", value: "genus" },
+  { name: "Common Name", value: "common_name", key: "1" },
+  { name: "family", value: "family", key: "2" },
+  { name: "genus", value: "genus", key: "3" },
 ];
-
 
 const SearchBar = ({ updatePlants }: any) => {
   const [name, setName] = useState("");
-  const [searchItem, setSearchItem] = useState(searchItems[0].name);
+  const [searchItem, setSearchItem] = useState({
+    name: searchItems[0].name,
+    value: searchItems[0].value,
+  });
 
   const fetchPlant = async () => {
-    const response: any = await getPlants();
+    const response: any = await getPlants({
+      value: searchItem.value,
+      name
+    });
     updatePlants(response.data);
   };
   const handleChange = (event: SelectChangeEvent) => {
-    setSearchItem(event.target.value as string);
+    const { value, name } = JSON.parse(event.target.value);
+    console.log(name, value);
+    setSearchItem({ ...searchItem, name, value });
   };
-  useEffect(() => {
-    console.log(searchItem);
-  }, [searchItem]);
+
   return (
     <div className="flex flex-row">
       <div className="flex-column basis-3/4 mr-10">
@@ -54,7 +59,7 @@ const SearchBar = ({ updatePlants }: any) => {
               >
                 {searchItems.map((item) => {
                   return (
-                    <MenuItem key={item.value} value={item.name}>
+                    <MenuItem key={item.key} value={JSON.stringify(item)}>
                       {item.name}
                     </MenuItem>
                   );
@@ -65,7 +70,7 @@ const SearchBar = ({ updatePlants }: any) => {
           <TextField
             className="mt-5"
             id="outlined-basic"
-            label={`Search ${searchItem}`}
+            label={`Search ${searchItem.name}`}
             variant="outlined"
             fullWidth
             InputProps={{
@@ -78,7 +83,7 @@ const SearchBar = ({ updatePlants }: any) => {
             }}
             onKeyDown={(event) => {
               {
-                event.key === "Enter" && fetchPlant()
+                event.key === "Enter" && fetchPlant();
               }
             }}
             value={name}
