@@ -27,8 +27,17 @@ model User {
   password  String
   role      String
   createdAt DateTime @default(now())
+  lastSearch LastSearch[]
 }
 
+model LastSearch {
+  id String @id @default(uuid())
+  userId String
+  searchCode String
+  searchString String
+  createdAt DateTime @default(now())
+  User User @relation(fields: [userId], references: [id])
+}
 model Author {
   id      String @id @default(uuid())
   name    String

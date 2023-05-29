@@ -23,6 +23,17 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
+CREATE TABLE "LastSearch" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "searchCode" TEXT NOT NULL,
+    "searchString" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "LastSearch_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Author" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -30,6 +41,9 @@ CREATE TABLE "Author" (
 
     CONSTRAINT "Author_pkey" PRIMARY KEY ("id")
 );
+
+-- AddForeignKey
+ALTER TABLE "LastSearch" ADD CONSTRAINT "LastSearch_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Author" ADD CONSTRAINT "Author_novelId_fkey" FOREIGN KEY ("novelId") REFERENCES "Novel"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
