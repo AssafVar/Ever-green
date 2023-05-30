@@ -18,4 +18,12 @@ export const theme = createTheme({
       main: '#11cb5f',
     },
   },
+  typography: {
+    subtitle1: {
+      fontSize: 14,
+    },
+    subtitle2: {
+      fontSize: 10,
+    },
+  }
 });

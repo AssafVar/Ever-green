@@ -16,6 +16,7 @@ export const typeDefs = `#graphql
     userId:String
     searchCode:String
     searchString:String
+    createdAt:String
   }
   type Novel {
     id: ID!

@@ -1,7 +1,7 @@
 import {
   Box,
-  Button,
   FormControl,
+  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -58,9 +58,9 @@ const handleNewSearch = async(item:{value:string, name:string}) => {
   };
 
   return (
-    <div className="flex flex-row">
-      <div className="flex-column basis-3/4 mr-10">
-        <Box className="flex items-end">
+    <div className="flex flex-row  justify-center">
+      <div className="flex-column">
+        <Box className="flex items-center mt-5">
           <FormControl>
             <InputLabel id="select-search"></InputLabel>
             <Tooltip title="Select your search" placement="top">
@@ -85,7 +85,6 @@ const handleNewSearch = async(item:{value:string, name:string}) => {
             </Tooltip>
           </FormControl>
           <TextField
-            className="mt-5"
             id="outlined-basic"
             label={`Search ${searchItem.name}`}
             variant="outlined"
@@ -105,10 +104,10 @@ const handleNewSearch = async(item:{value:string, name:string}) => {
             }}
             value={name}
           />
-          <Tooltip title="Search for your plant">
-            <Button variant="text" className="m-auto " onClick={fetchPlant}>
+          <Tooltip title="Search">
+            <IconButton className="m-auto " onClick={fetchPlant}>
               <SearchIcon />
-            </Button>
+            </IconButton>
           </Tooltip>
         </Box>
       </div>

@@ -33,6 +33,7 @@ export const GET_SEARCHES = gql`
       userId
       searchCode
       searchString
+      createdAt
     }
   }
 `

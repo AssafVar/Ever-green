@@ -8,9 +8,9 @@ const MasonryContainer = styled('div')({
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
   gap: '5px',
-  justifyItems: 'center'
+  justifyItems: 'center',
+  marginInline:"auto"
 });
-
 const PlantsList = ({plantsList}:PlantDetails[] | any) => {
 
   return (
