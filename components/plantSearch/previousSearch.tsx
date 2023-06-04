@@ -7,74 +7,79 @@ import { format } from "date-fns";
 import DeleteIcon from "@mui/icons-material/Delete";
 import styled from "@emotion/styled";
 
-const PreviousSearch = ({ createNewSearch }: any) => {
+const TypographyBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 10px;
+`;
+
+const LeftSideBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5px;
+  border: 1px solid rgb(203, 213, 225);
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 10px;
+`;
+
+type PreviousSearchProps = {
+  updateSearch: (searchString: string) => void;
+};
+
+const PreviousSearch = ({ updateSearch }: PreviousSearchProps) => {
   const [searchList, setSearchList] = useState([]);
   const { loading, error, data } = useQuery(GET_SEARCHES, {
     variables: {
       userId: "12",
     },
   });
+
   useEffect(() => {
-    data && setSearchList(data?.searches);
+    if (data) {
+      setSearchList(data?.searches);
+    }
   }, [data]);
-  const TypegraphyBox = styled("div")({
-    justifyContent: "space-between",
-    display: "contents",
-    paddingInline: "10px",
-  });
-  const LeftSideBox = styled("div")({
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: "5px",
-    border: "1px solid rgb(203 213 225)",
-    borderRadius: "10px",
-    paddingTop: "10px",
-    marginInline: "10px",
-    paddingInline: "20px",
-  });
 
   return (
     <LeftSideBox>
       <Typography className="m-4">Previous Search:</Typography>
       <QueryResult loading={loading} error={error} data={data}>
-        {searchList &&
-          searchList.length ?
-          searchList.map(
-            (item: {
-              id: string;
-              searchString: string;
-              createdAt: string;
-              searchCode: string;
-            }) => (
-              <div
-                className="flex justify-between self-stretch items-center"
-                key={item.id}
-                onClick={() => createNewSearch(item)}
-              >
-                <TypegraphyBox>
-                  <Tooltip title="Search">
-                    <Typography variant="subtitle1" className="cursor-pointer">
-                      {item?.searchString}
-                    </Typography>
-                  </Tooltip>
-                  <Typography variant="subtitle1" className="">
-                    |
+        {searchList && searchList.length ? (
+          searchList.map((item: { id: string, searchString: string, createdAt: string }) => (
+            <div
+              className="flex justify-between self-stretch items-center"
+              key={item.id}
+              onClick={() => updateSearch(item.searchString)}
+            >
+              <TypographyBox>
+                <Tooltip title="Search">
+                  <Typography variant="subtitle1" className="cursor-pointer">
+                    {item?.searchString}
                   </Typography>
-                  <Typography variant="subtitle2" className="">
-                    {format(new Date(+item?.createdAt), "dd/MM")}
-                  </Typography>
-                </TypegraphyBox>
-                <Tooltip title="Delete">
-                  <IconButton aria-label="delete">
-                    <DeleteIcon />
-                  </IconButton>
                 </Tooltip>
-              </div>
-            )
-          ):<Typography>No previous searches found</Typography>}
+                <Typography variant="subtitle1" className="">
+                  |
+                </Typography>
+                <Typography variant="subtitle2" className="">
+                  {format(new Date(+item?.createdAt), "dd/MM")}
+                </Typography>
+              </TypographyBox>
+              <Tooltip title="Delete">
+                <IconButton aria-label="delete">
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+            </div>
+          ))
+        ) : (
+          <Typography>No previous searches found</Typography>
+        )}
       </QueryResult>
     </LeftSideBox>
   );
 };
+
 export default PreviousSearch;

@@ -42,21 +42,21 @@ const createNewSearch:any = (item:any ) => {
 }
 
 export default function Home() {
-  const [plantsList, setPlantsList] = useState([]);
+  const [searchText, setSearchText] = useState('');
 
-  const updatePlants = (list: any | PlantDetails[]) => {
-    setPlantsList(list);
-  };
+  const updateSearch = (text:string) => {
+    setSearchText(text);
+  }
   return (
     <main>
       <Providers>
         <Layout home={true}>
           <FlexContainer>
             <LeftSideBox >
-              <SearchBar updatePlants={updatePlants} />
-              <PreviousSearch createNewSearch={createNewSearch}/>
+              <SearchBar updateSearch={updateSearch} />
+              <PreviousSearch updateSearch={updateSearch} />
             </LeftSideBox>
-              <PlantsCards plantsList={plantsList} />
+              <PlantsCards name={searchText} />
           </FlexContainer>
         </Layout>
       </Providers>

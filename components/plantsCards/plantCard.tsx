@@ -24,14 +24,12 @@ const PlantCard = ({ details }: { details: PlantDetails }) => {
 
   return (
     <div>
-      <Card sx={{ maxWidth: 345, height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <CardMedia 
           component="img"
-          height="140"
-          width="140"
           image={image_url}
           alt={common_name}
-          sx={{maxHeight: 200}}
+          sx={{ aspectRatio: '1', objectFit: 'cover' }}
         />
         <CardContent sx={{ flexGrow: 1 }}>
           <Typography gutterBottom variant="h5" component="div">

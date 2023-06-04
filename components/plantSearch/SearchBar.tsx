@@ -22,7 +22,7 @@ const searchItems = [
   { name: "genus", value: "genus", key: "3" },
 ];
 
-const SearchBar = ({ updatePlants }: any) => {
+const SearchBar = ({ updateSearch }: any) => {
   const [name, setName] = useState("");
   const [searchItem, setSearchItem] = useState({
     name: searchItems[0].name,
@@ -32,6 +32,7 @@ const [insertSearch, { loading, error, data }] = useMutation(INSERT_SEARCH);
 
 const handleNewSearch = async(item:{value:string, name:string}) => {
   try{
+    updateSearch(name);
     const response = await insertSearch({
       variables:{
         userId:'12',
@@ -45,11 +46,6 @@ const handleNewSearch = async(item:{value:string, name:string}) => {
 }
 
   const fetchPlant = async () => {
-    const response: any = await getPlants({
-      value: searchItem.value,
-      name
-    });
-    updatePlants(response.data);
     handleNewSearch({value: searchItem.value, name})
   };
   const handleChange = (event: SelectChangeEvent) => {
