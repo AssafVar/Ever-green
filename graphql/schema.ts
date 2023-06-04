@@ -37,7 +37,7 @@ export const typeDefs = `#graphql
     novel(id:ID!): Novel
     users: [User]
     user(id:ID!): User
-    searches(userId:String!): [Search]
+    userSearches(userId:String!): [Search]
   }
   type Mutation {
     addNovel (image: String, title: String): Novel
@@ -49,6 +49,6 @@ export const typeDefs = `#graphql
     updateUser (id:ID!, firstName:String, lastName:String, email:String, role:String) : User
     deleteUser (id:ID!) : User
     insertSearch (userId:String, searchCode:String, searchString:String) : Search
-    deleteSearch (id:ID!) : Search
+    deleteSingleSearch (id:ID!) : Search
   }
 `;

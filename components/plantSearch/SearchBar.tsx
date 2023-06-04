@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import { getPlants } from "@/lib/trefle";
 import ArrowDropDownCircleIcon from "@mui/icons-material/ArrowDropDownCircle";
 import { useMutation } from "@apollo/client";
 import { INSERT_SEARCH } from "@/graphql/queries";

@@ -26,7 +26,7 @@ export const resolvers = {
         },
       });
     },
-    searches: async (_:any, args:any, context:Context) => {
+    userSearches: async (_:any, args:any, context:Context) => {
       return await context.prisma.search.findMany({
         where: {
           userId: args.userId,
@@ -123,15 +123,13 @@ export const resolvers = {
         console.log(err);
       }
     },
-    /*
-    deleteSearch: async (_: any, args: any, context: Context) => {
+    deleteSingleSearch: async (_: any, args: any, context: Context) => {
       return await context.prisma.search.delete({
         where: {
           id: args.id,
         },
       });
     }, 
-    */
   },
   Novel: {
     authors: async (parent: any, __: any, context: Context) => {

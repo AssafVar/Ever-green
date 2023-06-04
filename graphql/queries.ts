@@ -26,9 +26,9 @@ export const INSERT_SEARCH = gql`
     }
   }
 `;
-export const GET_SEARCHES = gql`
-  query Searches ($userId: String!) {
-    searches(userId: $userId) {
+export const GET_USER_SEARCHES = gql`
+  query userSearches ($userId: String!) {
+    userSearches(userId: $userId) {
       id
       userId
       searchCode
@@ -37,3 +37,4 @@ export const GET_SEARCHES = gql`
     }
   }
 `
+
