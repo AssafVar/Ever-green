@@ -50,5 +50,6 @@ export const typeDefs = `#graphql
     deleteUser (id:ID!) : User
     insertSearch (userId:String, searchCode:String, searchString:String) : Search
     deleteSingleSearch (id:ID!) : Search
+    deleteAllSearch (userId:String!) : [Search]
   }
 `;

@@ -38,3 +38,25 @@ export const GET_USER_SEARCHES = gql`
   }
 `
 
+export const DELETE_SINGLE_SEARCH = gql`
+  mutation DeleteSingleSearch($id: ID!) {
+    deleteSingleSearch(id: $id) {
+      id
+      userId
+      searchCode
+      searchString
+      createdAt
+    }
+  }
+`
+export const DELETE_ALL_SEARCH = gql`
+  mutation DeleteAllSearch($userId: String!) {
+    deleteAllSearch(userId: $userId) {
+      id
+      userId
+      searchCode
+      searchString
+      createdAt
+    }
+  }
+`

@@ -6,7 +6,6 @@ import "../styles/globals.css";
 import "tailwindcss/tailwind.css";
 import PlantsCards from "@/components/plantsCards/plantsList";
 import { useState } from "react";
-import PlantDetails from "@/components/plantsCards/plantDetails";
 import SearchBar from "@/components/plantSearch/SearchBar";
 import PreviousSearch from "@/components/plantSearch/previousSearch";
 import styled from "@emotion/styled";
@@ -37,9 +36,6 @@ const LeftSideBox = styled('div')({
   }
 })
 
-const createNewSearch:any = (item:any ) => {
-  console.log(item)
-}
 
 export default function Home() {
   const [searchText, setSearchText] = useState('');

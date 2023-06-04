@@ -129,7 +129,22 @@ export const resolvers = {
           id: args.id,
         },
       });
-    }, 
+    },
+    deleteAllSearch: async (_: any, args: any, context: Context) => {
+      const deletedSearches = await context.prisma.search.findMany({
+        where: {
+          userId: args.userId,
+        },
+      });
+    
+      await context.prisma.search.deleteMany({
+        where: {
+          userId: args.userId,
+        },
+      });
+    
+      return deletedSearches;
+    }
   },
   Novel: {
     authors: async (parent: any, __: any, context: Context) => {
