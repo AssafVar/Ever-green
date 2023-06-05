@@ -8,17 +8,14 @@ import { NoSearchesText } from "./styles";
 import { Search } from "@/typings";
 
 
-
-
-
 type PreviousSearchProps = {
-  updateSearch: (searchString: string) => void;
+  updateSearch: (text: string | undefined) => void;
   newSearchlist: any[];
-  updateNewSearchList: (item:any) => void;
+  updateNewSearchList: (item: any) => void;
+  updateSearchList: (item:string|Search, action:string) => void,
 };
 
-const PreviousSearch = ({ updateSearch, updateNewSearchList, newSearchlist  }: PreviousSearchProps) => {
-  const [searchList, setSearchList] = useState([]);
+const PreviousSearch = ({ updateSearch, updateNewSearchList, newSearchlist, updateSearchList }: PreviousSearchProps) => {
 
   const { loading, error, data } = useQuery(GET_USER_SEARCHES, {
     variables: {
@@ -26,14 +23,14 @@ const PreviousSearch = ({ updateSearch, updateNewSearchList, newSearchlist  }: P
     },
   });
 
-
   useEffect(() => {
+    console.log('rendering previous search')
     if (data) {
-      setSearchList(data?.userSearches);
       updateNewSearchList(data?.userSearches);
     }
   }, [data]);
-  console.log(newSearchlist);
+  console.log('newSearchlist', newSearchlist)
+  
   return (
     <Box>
       <Typography variant="h5" gutterBottom>
@@ -41,11 +38,11 @@ const PreviousSearch = ({ updateSearch, updateNewSearchList, newSearchlist  }: P
       </Typography>
       <QueryResult loading={loading} error={error} data={data}>
 
-        {!!newSearchlist && newSearchlist.length>0
+        {!!newSearchlist && newSearchlist.length > 0
           ?
-          newSearchlist.map((searchItem:Search)=>
-            <div  key={searchItem?.id}>
-              <SearchTextLine searchItem={searchItem} updateSearch={updateSearch} updateNewSearchList={updateNewSearchList}/>
+          newSearchlist.map((searchItem: Search) =>
+            <div key={searchItem?.id}>
+              <SearchTextLine searchItem={searchItem} updateSearch={updateSearch} updateSearchList={updateSearchList}/>
             </div>
           )
           :

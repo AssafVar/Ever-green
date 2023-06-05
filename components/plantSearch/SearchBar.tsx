@@ -15,6 +15,7 @@ import ArrowDropDownCircleIcon from "@mui/icons-material/ArrowDropDownCircle";
 import { useMutation } from "@apollo/client";
 import { INSERT_SEARCH } from "@/graphql/queries";
 import { nanoid } from "nanoid";
+import { Search } from "@/typings";
 
 const searchItems = [
   { name: "Common Name", value: "common_name", key: "1" },
@@ -22,7 +23,11 @@ const searchItems = [
   { name: "genus", value: "genus", key: "3" },
 ];
 
-const SearchBar = ({ updateSearch }: any) => {
+type SearchBarProps = {
+  updateSearchList: (item:Search|string, action:string)=> void
+}
+
+const SearchBar = ({ updateSearchList }: SearchBarProps) => {
 
   const [name, setName] = useState("");
   const [searchItem, setSearchItem] = useState({
@@ -34,17 +39,18 @@ const [insertSearch, { loading, error, data }] = useMutation(INSERT_SEARCH);
 
 const handleNewSearch = async (item:{value:string, name:string}) => {
   try{
-    updateSearch(name);
-    console.log(new Date(),(new Date()).toLocaleString());
+    const variables = {
+      id: nanoid(),
+      userId:'12',
+      searchCode: item.value,
+      searchString: item.name,
+      createAt: (new Date()).toLocaleString(),
+    }
     const response:any = await insertSearch({
-      variables:{
-        id: nanoid(),
-        userId:'12',
-        searchCode: item.value,
-        searchString: item.name,
-        createAt: (new Date()).toLocaleString(),
-      }
-    });
+      variables:variables,
+    }).then(()=>{
+      updateSearchList(variables,'insert')
+    })
   }catch(err) {
     console.log(err);
   }

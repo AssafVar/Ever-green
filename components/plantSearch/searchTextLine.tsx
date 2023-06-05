@@ -11,11 +11,10 @@ import { Search } from '@/typings';
 type SearchLineTextProps = {
     searchItem: Search,
     updateSearch: (value:string|undefined)=>void,
-    updateNewSearchList: (value:any)=>void,
-
+    updateSearchList :(item:Search|string, action:string) => void,
 }
 
-const SearchTextLine = ({ searchItem, updateSearch,updateNewSearchList }:SearchLineTextProps) => {
+const SearchTextLine = ({ searchItem, updateSearch,updateSearchList }:SearchLineTextProps) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     //const [deleteOption, setDeleteOption] = useState("current");
 
@@ -29,12 +28,17 @@ const SearchTextLine = ({ searchItem, updateSearch,updateNewSearchList }:SearchL
             variables: {
                 id: searchItem.id
             }
+        }).then(() => {
+            updateSearchList(id, 'delete')
         })
         : deleteAllSearchMutation({
             variables: {
                 userId: '12'
             }
-        });
+        }).then(()=>{
+            updateSearchList('12', 'deleteAll');
+        })
+        updateSearchList
     };
 
     return (
@@ -44,9 +48,9 @@ const SearchTextLine = ({ searchItem, updateSearch,updateNewSearchList }:SearchL
                     <SearchText variant="subtitle1" title={searchItem.searchString} onClick={() => updateSearch(searchItem.searchString)}>
                         {searchItem.searchString}
                     </SearchText>
-                    <DateText variant="subtitle2" sx={{ fontSize: "10px" }}>
-                        {searchItem?.createdAt}
-                    </DateText>
+                    {searchItem?.createdAt&&<DateText variant="subtitle2" sx={{ fontSize: "10px" }}>
+                        {format(new Date(Number(searchItem?.createdAt)),'dd/MM')}
+                    </DateText>}
                 </Box>
                 <div onMouseLeave={()=>setAnchorEl(null)}>
                     <IconButton aria-label="delete" onMouseOver={(event) => setAnchorEl(event.currentTarget)} >

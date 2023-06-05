@@ -8,7 +8,7 @@ interface INovel extends Novel {
 interface Search {
     id:string,
     userId:string,
-    searchText:string|undefined,
+    searchCode:string|undefined,
     searchString?:string,
     createdAt?:string,
   }
