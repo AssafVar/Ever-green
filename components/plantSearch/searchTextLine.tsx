@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from "@emotion/styled";
-import { IconButton, Tooltip, Typography, MenuItem, Menu, ListItemIcon } from "@mui/material";
+import { IconButton, Typography, MenuItem, Menu, ListItemIcon } from "@mui/material";
 import { Box } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { format } from 'date-fns';
@@ -55,15 +55,6 @@ const SearchTextLine = ({ searchItem, updateSearch }: { searchItem: any, updateS
 
     const [deleteSingleSearchMutation, { loading, error, data }] = useMutation(DELETE_SINGLE_SEARCH);
     const [deleteAllSearchMutation] = useMutation(DELETE_ALL_SEARCH);
-
-    const handleDeleteClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleDeleteOption = (option: string) => {
-        //setDeleteOption(option);
-        setAnchorEl(null);
-    };
 
     const handleDeleteSearch = (id:string, deleteOption:string) => {
         console.log(id, deleteOption);

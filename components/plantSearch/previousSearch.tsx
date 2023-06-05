@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Box, IconButton, Tooltip, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useQuery } from "@apollo/client";
 import QueryResult from "../query-result";
 import { GET_USER_SEARCHES } from "@/graphql/queries";
-import { format } from "date-fns";
 import styled from "@emotion/styled";
 import SearchTextLine from "./searchTextLine";
 

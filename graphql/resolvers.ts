@@ -6,16 +6,6 @@ export type Context = {
 
 export const resolvers = {
   Query: {
-    novels: async (_: any, __: any, context: Context) => {
-      return await context.prisma.novel.findMany();
-    },
-    novel: async (_: any, args: any, context: Context) => {
-      return await context.prisma.novel.findUnique({
-        where: {
-          id: args.id,
-        },
-      });
-    },
     users: async (_: any, args: any, context: Context) => {
       return await context.prisma.user.findMany();
     },
@@ -35,47 +25,6 @@ export const resolvers = {
     }
   },
   Mutation: {
-    addNovel: async (_: any, args: any, context: Context) => {
-      return await context.prisma.novel.create({
-        data: {
-          title: args.title,
-          image: args.image,
-        },
-      });
-    },
-    updateNovel: async (_: any, args: any, context: Context) => {
-      return await context.prisma.novel.update({
-        where: {
-          id: args.id,
-        },
-        data: {
-          title: args.title,
-          image: args.image,
-        },
-      });
-    },
-    deleteNovel: async (_: any, args: any, context: Context) => {
-      return await context.prisma.novel.delete({
-        where: {
-          id: args.id,
-        },
-      });
-    },
-    addAuthor: async (_: any, args: any, context: Context) => {
-      return await context.prisma.author.create({
-        data: {
-          novelId: args.novelId,
-          name: args.name,
-        },
-      });
-    },
-    deleteAuthor: async (_: any, args: any, context: Context) => {
-      return await context.prisma.author.delete({
-        where: {
-          id: args.id,
-        },
-      });
-    },
     addUser: async (_: any, args: any, context: Context) => {
       try {
         return await context.prisma.user.create({
@@ -145,15 +94,6 @@ export const resolvers = {
     
       return deletedSearches;
     }
-  },
-  Novel: {
-    authors: async (parent: any, __: any, context: Context) => {
-      return await context.prisma.author.findMany({
-        where: {
-          novelId: parent.id,
-        },
-      });
-    },
   },
   User: {
     search: async (parent: any, __: any, context: Context) => {
