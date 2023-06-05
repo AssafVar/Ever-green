@@ -14,6 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ArrowDropDownCircleIcon from "@mui/icons-material/ArrowDropDownCircle";
 import { useMutation } from "@apollo/client";
 import { INSERT_SEARCH } from "@/graphql/queries";
+import { nanoid } from "nanoid";
 
 const searchItems = [
   { name: "Common Name", value: "common_name", key: "1" },
@@ -22,21 +23,26 @@ const searchItems = [
 ];
 
 const SearchBar = ({ updateSearch }: any) => {
+
   const [name, setName] = useState("");
   const [searchItem, setSearchItem] = useState({
     name: searchItems[0].name,
     value: searchItems[0].value,
   });
+
 const [insertSearch, { loading, error, data }] = useMutation(INSERT_SEARCH);
 
-const handleNewSearch = async(item:{value:string, name:string}) => {
+const handleNewSearch = async (item:{value:string, name:string}) => {
   try{
     updateSearch(name);
-    const response = await insertSearch({
+    console.log(new Date(),(new Date()).toLocaleString());
+    const response:any = await insertSearch({
       variables:{
+        id: nanoid(),
         userId:'12',
         searchCode: item.value,
         searchString: item.name,
+        createAt: (new Date()).toLocaleString(),
       }
     });
   }catch(err) {
@@ -47,7 +53,8 @@ const handleNewSearch = async(item:{value:string, name:string}) => {
   const fetchPlant = async () => {
     handleNewSearch({value: searchItem.value, name})
   };
-  const handleChange = (event: SelectChangeEvent) => {
+
+  const handleSearchChange = (event: SelectChangeEvent) => {
     const { value, name } = JSON.parse(event.target.value);
     setSearchItem({ ...searchItem, name, value });
   };
@@ -64,7 +71,7 @@ const handleNewSearch = async(item:{value:string, name:string}) => {
                 id="select-search"
                 value=""
                 IconComponent={ArrowDropDownCircleIcon}
-                onChange={handleChange}
+                onChange={handleSearchChange}
                 sx={{
                   "& fieldset": { border: "none" },
                 }}

@@ -6,9 +6,8 @@ import "../styles/globals.css";
 import "tailwindcss/tailwind.css";
 import PlantsCards from "@/components/plantsCards/plantsList";
 import { useState } from "react";
-import SearchBar from "@/components/plantSearch/SearchBar";
-import PreviousSearch from "@/components/plantSearch/previousSearch";
 import styled from "@emotion/styled";
+import SearchContainer from "@/components/plantSearch/searchContainer";
 
 const FlexContainer = styled('div')({
   display: 'grid',
@@ -38,19 +37,20 @@ const LeftSideBox = styled('div')({
 
 
 export default function Home() {
+
   const [searchText, setSearchText] = useState('');
 
-  const updateSearch = (text:string) => {
+  const updateSearch = (text: string) => {
     setSearchText(text);
-  }
+}
+
   return (
     <main>
       <Providers>
         <Layout home={true}>
           <FlexContainer>
             <LeftSideBox >
-              <SearchBar updateSearch={updateSearch} />
-              <PreviousSearch updateSearch={updateSearch} />
+              <SearchContainer updateSearch={updateSearch} searchText={searchText}/>
             </LeftSideBox>
               <PlantsCards name={searchText} />
           </FlexContainer>

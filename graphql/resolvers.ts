@@ -63,9 +63,11 @@ export const resolvers = {
       try {
         return await context.prisma.search.create({
           data: {
+            id:args.id,
             userId: args.userId,
             searchCode: args.searchCode,
             searchString: args.searchString,
+            createdAt:args.createdAt,
           },
         });
       } catch (err) {

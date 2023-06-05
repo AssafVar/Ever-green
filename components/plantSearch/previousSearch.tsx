@@ -22,12 +22,13 @@ const PreviousSearch = ({ updateSearch }: PreviousSearchProps) => {
     },
   });
 
+
   useEffect(() => {
     if (data) {
       setSearchList(data?.userSearches);
     }
   }, [data]);
-  
+
   return (
     <Box>
       <Typography variant="h5" gutterBottom>

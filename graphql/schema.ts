@@ -28,7 +28,7 @@ export const typeDefs = `#graphql
     addUser (firstName:String, lastName:String, password:String, email:String, role:String) : User
     updateUser (id:ID!, firstName:String, lastName:String, email:String, role:String) : User
     deleteUser (id:ID!) : User
-    insertSearch (userId:String, searchCode:String, searchString:String) : Search
+    insertSearch (id:String, userId:String, searchCode:String, searchString:String, createdAt:String) : Search
     deleteSingleSearch (id:ID!) : Search
     deleteAllSearch (userId:String!) : [Search]
   }

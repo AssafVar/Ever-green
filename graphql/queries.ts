@@ -1,12 +1,13 @@
 import { gql } from "@apollo/client";
 
 export const INSERT_SEARCH = gql`
-  mutation InsertSearch ($userId: String!, $searchCode: String, $searchString: String){
-    insertSearch(userId: $userId, searchCode: $searchCode, searchString: $searchString) {
+  mutation InsertSearch ($id:String, $userId: String!, $searchCode: String, $searchString: String, $createdAt: String){
+    insertSearch(id:$id, userId: $userId, searchCode: $searchCode, searchString: $searchString, createdAt: $createdAt) {
       id
       userId
       searchCode
       searchString
+      createdAt
     }
   }
 `;
