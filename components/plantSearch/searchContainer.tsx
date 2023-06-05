@@ -9,10 +9,17 @@ interface SearchContainerProps {
 
 const SearchContainer:React.FC<SearchContainerProps> = ({updateSearch, searchText}) => {
 
+    const [newSearchlist, setNewSearchList] = useState([]);
+    const updateNewSearchList = (item:any) => {
+        const newList = newSearchlist;
+        console.log(item);
+        
+        setNewSearchList(item);
+    }
     return (
         <>
             <SearchBar updateSearch={updateSearch} />
-            <PreviousSearch updateSearch={updateSearch}/>
+            <PreviousSearch updateSearch={updateSearch} newSearchlist={newSearchlist} updateNewSearchList={updateNewSearchList}/>
         </>
     );
 }

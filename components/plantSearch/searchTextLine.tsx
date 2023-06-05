@@ -6,9 +6,16 @@ import { format } from 'date-fns';
 import { useMutation } from '@apollo/client';
 import { DELETE_ALL_SEARCH, DELETE_SINGLE_SEARCH } from '@/graphql/queries';
 import { DateText, OptionText, RedListItemIcon, SearchItem, SearchText, StyledMenuItem } from './styles';
+import { Search } from '@/typings';
 
+type SearchLineTextProps = {
+    searchItem: Search,
+    updateSearch: (value:string|undefined)=>void,
+    updateNewSearchList: (value:any)=>void,
 
-const SearchTextLine = ({ searchItem, updateSearch }: { searchItem: any, updateSearch: any }) => {
+}
+
+const SearchTextLine = ({ searchItem, updateSearch,updateNewSearchList }:SearchLineTextProps) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     //const [deleteOption, setDeleteOption] = useState("current");
 
@@ -38,7 +45,7 @@ const SearchTextLine = ({ searchItem, updateSearch }: { searchItem: any, updateS
                         {searchItem.searchString}
                     </SearchText>
                     <DateText variant="subtitle2" sx={{ fontSize: "10px" }}>
-                        {format(new Date(+searchItem?.createdAt), "dd/MM")}
+                        {searchItem?.createdAt}
                     </DateText>
                 </Box>
                 <div onMouseLeave={()=>setAnchorEl(null)}>

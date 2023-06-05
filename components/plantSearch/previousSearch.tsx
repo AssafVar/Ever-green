@@ -5,6 +5,7 @@ import QueryResult from "../query-result";
 import { GET_USER_SEARCHES } from "@/graphql/queries";
 import SearchTextLine from "./searchTextLine";
 import { NoSearchesText } from "./styles";
+import { Search } from "@/typings";
 
 
 
@@ -12,10 +13,13 @@ import { NoSearchesText } from "./styles";
 
 type PreviousSearchProps = {
   updateSearch: (searchString: string) => void;
+  newSearchlist: any[];
+  updateNewSearchList: (item:any) => void;
 };
 
-const PreviousSearch = ({ updateSearch }: PreviousSearchProps) => {
+const PreviousSearch = ({ updateSearch, updateNewSearchList, newSearchlist  }: PreviousSearchProps) => {
   const [searchList, setSearchList] = useState([]);
+
   const { loading, error, data } = useQuery(GET_USER_SEARCHES, {
     variables: {
       userId: "12",
@@ -26,9 +30,10 @@ const PreviousSearch = ({ updateSearch }: PreviousSearchProps) => {
   useEffect(() => {
     if (data) {
       setSearchList(data?.userSearches);
+      updateNewSearchList(data?.userSearches);
     }
   }, [data]);
-
+  console.log(newSearchlist);
   return (
     <Box>
       <Typography variant="h5" gutterBottom>
@@ -36,11 +41,11 @@ const PreviousSearch = ({ updateSearch }: PreviousSearchProps) => {
       </Typography>
       <QueryResult loading={loading} error={error} data={data}>
 
-        {!!searchList && searchList.length>0
+        {!!newSearchlist && newSearchlist.length>0
           ?
-          searchList.map((searchItem:{ id: string; searchString: string; createdAt: string })=>
+          newSearchlist.map((searchItem:Search)=>
             <div  key={searchItem?.id}>
-              <SearchTextLine searchItem={searchItem} updateSearch={updateSearch} />
+              <SearchTextLine searchItem={searchItem} updateSearch={updateSearch} updateNewSearchList={updateNewSearchList}/>
             </div>
           )
           :

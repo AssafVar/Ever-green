@@ -42,7 +42,7 @@ export default function Home() {
 
   const updateSearch = (text: string) => {
     setSearchText(text);
-}
+  }
 
   return (
     <main>
@@ -50,7 +50,7 @@ export default function Home() {
         <Layout home={true}>
           <FlexContainer>
             <LeftSideBox >
-              <SearchContainer updateSearch={updateSearch} searchText={searchText}/>
+              <SearchContainer updateSearch={updateSearch} searchText={searchText} />
             </LeftSideBox>
               <PlantsCards name={searchText} />
           </FlexContainer>
