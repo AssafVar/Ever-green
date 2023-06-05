@@ -1,53 +1,12 @@
 import React, { useState } from 'react';
-import styled from "@emotion/styled";
-import { IconButton, Typography, MenuItem, Menu, ListItemIcon } from "@mui/material";
+import { IconButton, Menu, ListItemIcon } from "@mui/material";
 import { Box } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { format } from 'date-fns';
 import { useMutation } from '@apollo/client';
 import { DELETE_ALL_SEARCH, DELETE_SINGLE_SEARCH } from '@/graphql/queries';
+import { DateText, OptionText, RedListItemIcon, SearchItem, SearchText, StyledMenuItem } from './styles';
 
-const SearchItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #f8f8f8;
-  border-radius: 8px;
-  &:hover {
-    background-color: #eaeaea;
-  }
-`;
-
-const SearchText = styled(Typography)`
-  flex: 1;
-  margin-right: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 16px;
-  cursor: pointer;
-`;
-
-const DateText = styled(Typography)`
-  font-size: 12px;
-  color: #888888;
-`;
-
-const StyledMenuItem = styled(MenuItem)`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-const OptionText = styled(Typography)`
-  font-size: 14px;
-`;
-
-const RedListItemIcon = styled(ListItemIcon)`
-  color: red;
-`;
 
 const SearchTextLine = ({ searchItem, updateSearch }: { searchItem: any, updateSearch: any }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
