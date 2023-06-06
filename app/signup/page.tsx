@@ -9,15 +9,18 @@ import { InputField, SubmitButton } from '@/components/MuiComponents';
 
 const SignupPage: React.FC = () => {
     const initialValues = {
-        username: '',
+        firstName: '',
+        lastName: '',
         password: '',
         repassword: '',
         email: '',
     };
 
     const validationSchema = Yup.object({
-        username: Yup.string().required('Username is required'),
-        password: Yup.string().required('Password is required'),
+        firstName: Yup.string().required('First name is required'),
+        lastName: Yup.string().required('Last name is required'),
+        password: Yup.string().required('Password is required')
+        .min(4, "Password must be at least 4 characters"),
         repassword: Yup.string()
             .oneOf([Yup.ref('password')], 'Passwords do not match')
             .required('Please re-enter your password'),
@@ -46,13 +49,27 @@ const SignupPage: React.FC = () => {
                                     <div>
                                         <Field
                                             as={InputField}
-                                            name="username"
-                                            label="Username"
+                                            name="firstName"
+                                            type="text"
+                                            label="firstName"
                                             variant="outlined"
                                             fullWidth
-                                            error={Boolean(errors.username && touched.username)}
-                                            helperText={<ErrorMessage name="username" />}
-                                            autoComplete="username"
+                                            error={Boolean(errors.firstName && touched.firstName)}
+                                            helperText={<ErrorMessage name="firstName" />}
+                                            autoComplete="firstName"
+                                        />
+                                    </div>
+                                    <div>
+                                        <Field
+                                            as={InputField}
+                                            name="lastName"
+                                            label="lastName"
+                                            type="text"
+                                            variant="outlined"
+                                            fullWidth
+                                            error={Boolean(errors.lastName && touched.lastName)}
+                                            helperText={<ErrorMessage name="lastName" />}
+                                            autoComplete="lastName"
                                         />
                                     </div>
                                     <div>

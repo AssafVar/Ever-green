@@ -25,6 +25,7 @@ interface InputFieldProps extends FieldProps{
     error: boolean;
     helperText: string;
     name:string;
+    name:string;
   }
 
 interface SubmitButtonProps {
