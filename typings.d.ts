@@ -6,9 +6,25 @@ interface INovel extends Novel {
 }
 
 interface Search {
-    id:string,
-    userId:string,
-    searchCode:string|undefined,
-    searchString?:string,
-    createdAt?:string,
-  }
+    id: string,
+    userId: string,
+    searchCode: string | undefined,
+    searchString?: string,
+    createdAt?: string,
+}
+
+interface UserInputFieldProps {
+    label: string;
+    type: string;
+    id: string;
+    autoComplete?: string;
+    autoFocus?: boolean;
+    required?: boolean;
+}
+interface SubmitButtonProps {
+    text: string;
+}
+interface FormLine {
+    name: string;
+    value: string;
+}
