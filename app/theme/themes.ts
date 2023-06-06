@@ -11,15 +11,29 @@ export const theme = createTheme({
   
   palette: {
     primary: {
-      // Purple and green play nicely together.
-      main: purple[500],
+      light: "#63a4ff",
+      main: "#1976d2",
+      dark: "#004ba0",
+      contrastText: "#ffffff",
     },
     secondary: {
-      // This is green.A700 as hex.
-      main: '#11cb5f',
+      light: "#ffb74d",
+      main: "#ff9800",
+      dark: "#f57c00",
+      contrastText: "#000000",
     },
+    // Custom colors
     warning: {
-      main: red[500],
+      light: "#84d7ff",
+      main: "#00aeff",
+      dark: "#007ad6",
+      contrastText: "#ffffff",
+    },
+    success: {
+      light: "#ff9e80",
+      main: "#ff6e40",
+      dark: "#c53d13",
+      contrastText: "#000000",
     },
   },
   typography: {

@@ -1,8 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
 import NavItem from "./NavItem";
+import {
+  AppBar,
+  Toolbar,
+  Link,
+  Box,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const MENU_LIST = [
   { text: "Home", href: "/" },
@@ -15,28 +25,62 @@ const REGISTER_LIST = [
 ];
 
 const Navbar = () => {
-
   const path = usePathname();
-  
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setIsOpenMenu(true);
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setIsOpenMenu(false)
+    setAnchorEl(null);
+  };
+
   return (
-    <>
-        <div className="flex justify-between">
-          <div className="flex mr-auto ml-6">
-            {MENU_LIST.map((menu) => (
-              <div key={menu.text} className={menu.href===path ? "p-4 text-orange-400" : "p-4"}>
-                <NavItem {...menu} />
-              </div>
-            ))}
-          </div>
-          <div className="flex mr-6">
+    <AppBar position="static">
+      <Toolbar>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          {MENU_LIST.map((menu) => (
+            <Box
+            key={menu.text}
+            p={4}
+            color={menu.href === path ? "secondary.main" : "initial"}
+          >
+            <NavItem {...menu} />
+          </Box>
+          ))}
+        </Box>
+        <Box sx={{ flexGrow: 1 }} />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <IconButton
+            edge="end"
+            aria-label="menu"
+            aria-controls="menu"
+            aria-haspopup="true"
+            onClick={handleMenuOpen}
+            color ={isOpenMenu ? "primary" : "inherit"}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            id="menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+          >
             {REGISTER_LIST.map((menu) => (
-              <div key={menu.text} className={menu.href===path ? "p-4 text-orange-400" : "p-4"}>
-              <NavItem text={menu.text} href={menu.href}  />
-              </div>
+              <MenuItem key={menu.text} onClick={handleMenuClose}>
+                <NavItem text={menu.text} href={menu.href} />
+              </MenuItem>
             ))}
-          </div>
+          </Menu>
         </div>
-    </>
+      </Toolbar>
+    </AppBar>
   );
 };
+
 export default Navbar;
