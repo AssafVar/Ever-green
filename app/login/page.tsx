@@ -1,17 +1,28 @@
 "use client";
-import React, { FormEvent } from 'react';
-import Layout from "@/components/layout/layout";
-import { Providers } from "@/components/Providers";
-import { getFormElements } from '@/lib/formFunctions';
+
+import React from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import Layout from '@/components/layout/layout';
+import { Providers } from '@/components/Providers';
 import { InputField, SubmitButton } from '@/components/MuiComponents';
+import { Link, Typography } from '@mui/material';
 
 const LoginPage: React.FC = () => {
-  
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const { elements }: any = event.currentTarget;
-    const formDetails = getFormElements(elements)
-    console.log(formDetails)
+  const initialValues = {
+    email: '',
+    password: '',
+  };
+
+  const validationSchema = Yup.object({
+    password: Yup.string().required('Password is required'),
+    email: Yup.string().email('Invalid email').required('Email is required'),
+  });
+
+  const handleSubmit = (values: any, { setSubmitting }: any) => {
+    setSubmitting(false);
+    console.log(values);
+
   };
 
   return (
@@ -20,24 +31,51 @@ const LoginPage: React.FC = () => {
         <div className="flex justify-center items-center h-screen bg-gray-100">
           <div className="bg-white p-8 rounded shadow-md max-w-sm w-full">
             <h1 className="text-2xl font-bold mb-6">Login</h1>
-            <form onSubmit={handleSubmit}>
-              <InputField
-                label="Username"
-                type="text"
-                id="username"
-                autoComplete="username"
-                autoFocus
-                required
-              />
-              <InputField
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                required
-              />
-              <SubmitButton text="Sign In" />
-            </form>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ errors, touched, isSubmitting }) => (
+                <Form>
+                  <div>
+                    <Field
+                      as={InputField}
+                      name="email"
+                      label="Email"
+                      variant="outlined"
+                      fullWidth
+                      error={Boolean(errors.email && touched.email)}
+                      helperText={<ErrorMessage name="email" />}
+                      autoComplete="email"
+                    />
+                  </div>
+                  <div>
+                    <Field
+                      as={InputField}
+                      type="password"
+                      name="password"
+                      label="Password"
+                      variant="outlined"
+                      fullWidth
+                      error={Boolean(errors.password && touched.password)}
+                      helperText={<ErrorMessage name="password" />}
+                      autoComplete="new-password"
+                    />
+                  </div>
+
+                  <div>
+                    <SubmitButton text="Sign Up" disabled={isSubmitting} />
+                  </div>
+                  <Typography className="mt-5">
+                    New user?{' '}
+                    <Link color="primary" href="/signup">
+                      Signup for a new account
+                    </Link>
+                  </Typography>
+                </Form>
+              )}
+            </Formik>
           </div>
         </div>
       </Layout>
@@ -45,4 +83,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage
+export default LoginPage;

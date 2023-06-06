@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import Layout from '@/components/layout/layout';
 import { Providers } from '@/components/Providers';
 import { InputField, SubmitButton } from '@/components/MuiComponents';
+import { Link, Typography } from '@mui/material';
 
 const SignupPage: React.FC = () => {
     const initialValues = {
@@ -117,6 +118,12 @@ const SignupPage: React.FC = () => {
                                 </Form>
                             )}
                         </Formik>
+                        <Typography className="mt-5">
+                    Already a user?{' '}
+                    <Link color="primary" href="/login">
+                      Login to your account
+                    </Link>
+                  </Typography>
                     </div>
                 </div>
             </Layout>
