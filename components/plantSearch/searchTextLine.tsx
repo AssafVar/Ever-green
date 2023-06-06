@@ -10,34 +10,34 @@ import { Search } from '@/typings';
 
 type SearchLineTextProps = {
     searchItem: Search,
-    updateSearch: (text:string)=>void,
-    updateSearchList :(item:Search|string, action:string) => void,
+    updateSearch: (text: string) => void,
+    updateSearchList: (item: Search | string, action: string) => void,
 }
 
-const SearchTextLine = ({ searchItem, updateSearch,updateSearchList }:SearchLineTextProps) => {
+const SearchTextLine = ({ searchItem, updateSearch, updateSearchList }: SearchLineTextProps) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    //const [deleteOption, setDeleteOption] = useState("current");
+    const [onDeleteButton, setOnDeleteButton] = useState<string>('');
 
     const [deleteSingleSearchMutation, { loading, error, data }] = useMutation(DELETE_SINGLE_SEARCH);
     const [deleteAllSearchMutation] = useMutation(DELETE_ALL_SEARCH);
 
-    const handleDeleteSearch = (id:string, deleteOption:string) => {
+    const handleDeleteSearch = (id: string, deleteOption: string) => {
         console.log(id, deleteOption);
-        deleteOption === "current" 
-        ? deleteSingleSearchMutation({
-            variables: {
-                id: searchItem.id
-            }
-        }).then(() => {
-            updateSearchList(id, 'delete')
-        })
-        : deleteAllSearchMutation({
-            variables: {
-                userId: '12'
-            }
-        }).then(()=>{
-            updateSearchList('12', 'deleteAll');
-        })
+        deleteOption === "current"
+            ? deleteSingleSearchMutation({
+                variables: {
+                    id: searchItem.id
+                }
+            }).then(() => {
+                updateSearchList(id, 'delete')
+            })
+            : deleteAllSearchMutation({
+                variables: {
+                    userId: '12'
+                }
+            }).then(() => {
+                updateSearchList('12', 'deleteAll');
+            })
         updateSearchList
     };
 
@@ -45,15 +45,17 @@ const SearchTextLine = ({ searchItem, updateSearch,updateSearchList }:SearchLine
         <>
             <SearchItem key={searchItem.id} onClick={() => searchItem?.searchString && updateSearch(searchItem.searchString)}>
                 <Box display="flex" alignItems="center">
-                    <SearchText variant="subtitle1" title={searchItem.searchString} onClick={() =>searchItem?.searchString && updateSearch(searchItem.searchString)}>
+
+                    <SearchText variant="subtitle1" title={searchItem.searchString} onClick={() => searchItem?.searchString && updateSearch(searchItem.searchString)}>
                         {searchItem.searchString}
                     </SearchText>
-                    {searchItem?.createdAt&&<DateText variant="subtitle2" sx={{ fontSize: "10px" }}>
-                        {format(new Date(Number(searchItem?.createdAt)),'dd/MM')}
+                    {searchItem?.createdAt && <DateText variant="subtitle2" sx={{ fontSize: "10px" }}>
+                        {format(new Date(Number(searchItem?.createdAt)), 'dd/MM')}
                     </DateText>}
                 </Box>
-                <div onMouseLeave={()=>setAnchorEl(null)}>
-                    <IconButton aria-label="delete" onMouseOver={(event) => setAnchorEl(event.currentTarget)} >
+                <div /* onMouseLeave={()=>setAnchorEl(null)} */>
+                    <IconButton color={anchorEl ? 'primary' : 'default'}
+                        aria-label="delete" onClick={(event) => setAnchorEl(event.currentTarget)} >
                         <DeleteIcon />
                     </IconButton>
                     <Menu
@@ -69,17 +71,17 @@ const SearchTextLine = ({ searchItem, updateSearch,updateSearchList }:SearchLine
                             horizontal: 'right'
                         }}
                     >
-                        <StyledMenuItem onClick={() => handleDeleteSearch(searchItem.id,"current")}>
-                            <ListItemIcon>
-                                <DeleteIcon fontSize="small" />
+                        <StyledMenuItem onClick={() => handleDeleteSearch(searchItem.id, "current")} onMouseOver={()=>setOnDeleteButton('single')} onMouseLeave={()=>setOnDeleteButton('')}>
+                            <ListItemIcon >
+                                <DeleteIcon fontSize="small" color={onDeleteButton==='single' ? 'primary' : 'inherit'} />
                             </ListItemIcon>
-                            <OptionText>Current</OptionText>
+                            <OptionText color={onDeleteButton==='single' ? 'primary' : 'inherit'}>Current</OptionText>
                         </StyledMenuItem>
-                        <StyledMenuItem onClick={() => handleDeleteSearch('12',"all")}>
-                            <RedListItemIcon>
-                                <DeleteIcon fontSize="small" />
-                            </RedListItemIcon>
-                            <OptionText>All</OptionText>
+                        <StyledMenuItem onClick={() => handleDeleteSearch('12', "all")} onMouseOver={()=>setOnDeleteButton('all')} onMouseLeave={()=>setOnDeleteButton('')}>
+                            <ListItemIcon>
+                                <DeleteIcon fontSize="small" color={onDeleteButton==='all' ? 'warning' : 'inherit'}/>
+                            </ListItemIcon>
+                            <OptionText color={onDeleteButton==='all' ? 'warning' : 'inherit'}>All</OptionText>
                         </StyledMenuItem>
                     </Menu>
                 </div>

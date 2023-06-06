@@ -1,5 +1,5 @@
 "use client";
-import { purple } from "@mui/material/colors";
+import { purple, red } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
 export const darkTheme = createTheme({
   palette: {
@@ -16,6 +16,9 @@ export const theme = createTheme({
     secondary: {
       // This is green.A700 as hex.
       main: '#11cb5f',
+    },
+    warning: {
+      main: red[500],
     },
   },
   typography: {
