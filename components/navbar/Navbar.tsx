@@ -10,7 +10,7 @@ const MENU_LIST = [
   { text: "Contact", href: "/contact" },
 ];
 const REGISTER_LIST = [
-  { text: "Register", href: "/register" },
+  { text: "Signup", href: "/signup" },
   { text: "Login", href: "/login" },
 ];
 
