@@ -37,7 +37,7 @@ const SignupPage: React.FC = () => {
     return (
         <Providers>
             <Layout>
-                <div className="flex justify-center items-center h-screen bg-gray-100">
+                <div className="flex justify-center items-center bg-gray-100 py-16">
                     <div className="bg-white p-8 rounded shadow-md max-w-sm w-full">
                         <h1 className="text-2xl font-bold mb-6">Sign Up</h1>
                         <Formik
@@ -52,7 +52,7 @@ const SignupPage: React.FC = () => {
                                             as={InputField}
                                             name="firstName"
                                             type="text"
-                                            label="firstName"
+                                            label="First name"
                                             variant="outlined"
                                             fullWidth
                                             error={Boolean(errors.firstName && touched.firstName)}
@@ -64,7 +64,7 @@ const SignupPage: React.FC = () => {
                                         <Field
                                             as={InputField}
                                             name="lastName"
-                                            label="lastName"
+                                            label="Last name"
                                             type="text"
                                             variant="outlined"
                                             fullWidth
