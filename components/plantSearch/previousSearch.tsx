@@ -7,12 +7,11 @@ import SearchTextLine from "./searchTextLine";
 import { NoSearchesText } from "./styles";
 import { Search } from "@/typings";
 
-
 type PreviousSearchProps = {
   updateSearch: (text: string) => void;
   newSearchlist: any[];
   updateNewSearchList: (item: any) => void;
-  updateSearchList: (item:string|Search, action:string) => void,
+  updateSearchList: (item: string | Search, action: string) => void,
 };
 
 const PreviousSearch = ({ updateSearch, updateNewSearchList, newSearchlist, updateSearchList }: PreviousSearchProps) => {
@@ -24,32 +23,33 @@ const PreviousSearch = ({ updateSearch, updateNewSearchList, newSearchlist, upda
   });
 
   useEffect(() => {
-    console.log('rendering previous search')
+    console.log("rendering previous search");
     if (data) {
       updateNewSearchList(data?.userSearches);
     }
   }, [data]);
-  console.log('newSearchlist', newSearchlist)
+
+  console.log("newSearchlist", newSearchlist);
 
   return (
-    <Box>
-      <Typography variant="h5" gutterBottom>
-        Previous Searches:
-      </Typography>
-      <QueryResult loading={loading} error={error} data={data}>
-
-        {!!newSearchlist && newSearchlist.length > 0
-          ?
-          newSearchlist.map((searchItem: Search) =>
-            <div key={searchItem?.id}>
-              <SearchTextLine searchItem={searchItem} updateSearch={updateSearch} updateSearchList={updateSearchList}/>
-            </div>
-          )
-          :
-          <NoSearchesText>No previous searches found</NoSearchesText>
-        }
-      </QueryResult>
-    </Box>
+    <div>
+      <h5 className="text-2xl font-bold my-4 text-primary">
+        Previous Search:
+      </h5>
+      <Box sx={{ maxHeight: 400, overflowY: 'auto' }}>
+        <QueryResult loading={loading} error={error} data={data}>
+          {!!newSearchlist && newSearchlist.length > 0 ? (
+            newSearchlist.map((searchItem: Search) => (
+              <div key={searchItem?.id}>
+                <SearchTextLine searchItem={searchItem} updateSearch={updateSearch} updateSearchList={updateSearchList} />
+              </div>
+            ))
+          ) : (
+            <NoSearchesText>No previous searches found</NoSearchesText>
+          )}
+        </QueryResult>
+      </Box>
+    </div>
   );
 };
 
