@@ -6,18 +6,18 @@ import NavItem from "./NavItem";
 import {
   AppBar,
   Toolbar,
-  Link,
   Box,
   IconButton,
   Menu,
   MenuItem,
+  Tooltip,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const MENU_LIST = [
-  { text: "Home", href: "/" },
-  { text: "About Us", href: "/about" },
-  { text: "Contact", href: "/contact" },
+  { text: "Home", href: "/", tooltip: "Return to main page" },
+  { text: "About Us", href: "/about", tooltip: "Details about us" },
+  { text: "Contact", href: "/contact", tooltip: "Feel free to contact" },
 ];
 const REGISTER_LIST = [
   { text: "Signup", href: "/signup" },
@@ -44,27 +44,33 @@ const Navbar = () => {
       <Toolbar>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           {MENU_LIST.map((menu) => (
-            <Box
-            key={menu.text}
-            p={4}
-            color={menu.href === path ? "secondary.main" : "initial"}
-          >
-            <NavItem {...menu} />
-          </Box>
+            <Tooltip title={menu.tooltip}>
+              <Box
+                key={menu.text}
+                p={4}
+                color={menu.href === path ? "secondary.main" : "initial"}
+                fontWeight={menu.href === path ? "bold" : ''}
+              >
+                <NavItem {...menu} />
+              </Box>
+            </Tooltip>
           ))}
         </Box>
         <Box sx={{ flexGrow: 1 }} />
         <div style={{ display: "flex", alignItems: "center" }}>
-          <IconButton
-            edge="end"
-            aria-label="menu"
-            aria-controls="menu"
-            aria-haspopup="true"
-            onClick={handleMenuOpen}
-            color ={isOpenMenu ? "primary" : "inherit"}
-          >
-            <MenuIcon />
-          </IconButton>
+
+          <Tooltip title="Signup or Login">
+            <IconButton
+              edge="end"
+              aria-label="menu"
+              aria-controls="menu"
+              aria-haspopup="true"
+              onClick={handleMenuOpen}
+              color={isOpenMenu ? "primary" : "inherit"}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Tooltip>
           <Menu
             id="menu"
             anchorEl={anchorEl}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Box,
   FormControl,
+  IconButton,
   InputAdornment,
   InputLabel,
   MenuItem,
@@ -82,7 +83,9 @@ const SearchBar = ({ updateSearchList }: SearchBarProps) => {
               },
               startAdornment: (
                 <InputAdornment position="start">
+                  <IconButton onClick={()=>fetchPlant()}>
                   <SearchIcon />
+                  </IconButton>
                 </InputAdornment>
               ),
               endAdornment: (

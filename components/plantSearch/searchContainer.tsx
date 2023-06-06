@@ -37,10 +37,10 @@ const SearchContainer:React.FC<SearchContainerProps> = ({updateSearch, searchTex
       },[])
 
     return (
-        <>
+        <div className="ml-4">
             <SearchBar updateSearchList={updateSearchList}/>
             <PreviousSearch updateSearchList={updateSearchList} updateSearch={updateSearch} newSearchlist={newSearchlist} updateNewSearchList={updateNewSearchList}/>
-        </>
+        </div>
     );
 }
 export default SearchContainer;
