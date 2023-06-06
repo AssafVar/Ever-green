@@ -9,7 +9,7 @@ import { Search } from "@/typings";
 
 
 type PreviousSearchProps = {
-  updateSearch: (text: string | undefined) => void;
+  updateSearch: (text: string) => void;
   newSearchlist: any[];
   updateNewSearchList: (item: any) => void;
   updateSearchList: (item:string|Search, action:string) => void,
@@ -30,7 +30,7 @@ const PreviousSearch = ({ updateSearch, updateNewSearchList, newSearchlist, upda
     }
   }, [data]);
   console.log('newSearchlist', newSearchlist)
-  
+
   return (
     <Box>
       <Typography variant="h5" gutterBottom>

@@ -10,7 +10,7 @@ import { Search } from '@/typings';
 
 type SearchLineTextProps = {
     searchItem: Search,
-    updateSearch: (value:string|undefined)=>void,
+    updateSearch: (text:string)=>void,
     updateSearchList :(item:Search|string, action:string) => void,
 }
 
@@ -43,9 +43,9 @@ const SearchTextLine = ({ searchItem, updateSearch,updateSearchList }:SearchLine
 
     return (
         <>
-            <SearchItem key={searchItem.id} onClick={() => updateSearch(searchItem.searchString)}>
+            <SearchItem key={searchItem.id} onClick={() => searchItem?.searchString && updateSearch(searchItem.searchString)}>
                 <Box display="flex" alignItems="center">
-                    <SearchText variant="subtitle1" title={searchItem.searchString} onClick={() => updateSearch(searchItem.searchString)}>
+                    <SearchText variant="subtitle1" title={searchItem.searchString} onClick={() =>searchItem?.searchString && updateSearch(searchItem.searchString)}>
                         {searchItem.searchString}
                     </SearchText>
                     {searchItem?.createdAt&&<DateText variant="subtitle2" sx={{ fontSize: "10px" }}>

@@ -4,7 +4,7 @@ import SearchBar from "./searchBar";
 import { Search } from "@/typings";
 
 interface SearchContainerProps {
-    updateSearch: (value: string|undefined) => void;
+    updateSearch: (text: string) => void;
     searchText: string;
   }
 
@@ -28,7 +28,7 @@ const SearchContainer:React.FC<SearchContainerProps> = ({updateSearch, searchTex
         }else if( action === 'insert') {
           const newList = newSearchlist as Array <Search | any>;
           !!item && newList.push(item);
-          typeof item !== 'string' && updateSearch(item?.searchString)
+          typeof item !== 'string' && item?.searchString && updateSearch(item?.searchString)
           updateNewSearchList(newList);
         }
       }
