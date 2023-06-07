@@ -15,13 +15,13 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 
 const MENU_LIST = [
-  { text: "Home", href: "/", tooltip: "Return to main page" },
-  { text: "About Us", href: "/about", tooltip: "Details about us" },
-  { text: "Contact", href: "/contact", tooltip: "Feel free to contact" },
+  { text: "Home", href: "/", tooltip: "Return to main page", id: '1' },
+  { text: "About Us", href: "/about", tooltip: "Details about us", id: '2' },
+  { text: "Contact", href: "/contact", tooltip: "Feel free to contact", id: '3' },
 ];
 const REGISTER_LIST = [
-  { text: "Signup", href: "/signup" },
-  { text: "Login", href: "/login" },
+  { text: "Signup", href: "/signup", id: '1' },
+  { text: "Login", href: "/login", id: '2' },
 ];
 
 const Navbar = () => {
@@ -44,16 +44,18 @@ const Navbar = () => {
       <Toolbar>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           {MENU_LIST.map((menu) => (
-            <Tooltip title={menu.tooltip}>
-              <Box
-                key={menu.text}
-                p={4}
-                color={menu.href === path ? "secondary.main" : "initial"}
-                fontWeight={menu.href === path ? "bold" : ''}
-              >
-                <NavItem {...menu} />
-              </Box>
-            </Tooltip>
+            <div key={menu.id}>
+              <Tooltip title={menu.tooltip}>
+                <Box
+                  key={menu.id}
+                  p={4}
+                  color={menu.href === path ? "secondary.main" : "initial"}
+                  fontWeight={menu.href === path ? "bold" : ''}
+                >
+                  <NavItem {...menu} />
+                </Box>
+              </Tooltip>
+            </div>
           ))}
         </Box>
         <Box sx={{ flexGrow: 1 }} />
@@ -78,7 +80,7 @@ const Navbar = () => {
             onClose={handleMenuClose}
           >
             {REGISTER_LIST.map((menu) => (
-              <MenuItem key={menu.text} onClick={handleMenuClose}>
+              <MenuItem key={menu.id} onClick={handleMenuClose}>
                 <NavItem text={menu.text} href={menu.href} />
               </MenuItem>
             ))}

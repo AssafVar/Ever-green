@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 export type Context = {
   prisma: PrismaClient;
@@ -25,7 +25,7 @@ export const resolvers = {
     }
   },
   Mutation: {
-    addUser: async (_: any, args: any, context: Context) => {
+    insertUser: async (_: any, args: any, context: Context) => {
       try {
         return await context.prisma.user.create({
           data: {
@@ -36,8 +36,11 @@ export const resolvers = {
             role: args.role,
           },
         });
-      } catch (err) {
-        console.log(err);
+      } catch (err:any) {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+          throw new Error(err.code)
+        };
+        throw new Error(err.message);
       }
     },
     updateUser: async (_: any, args: any, context: any) => {

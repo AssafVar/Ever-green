@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Layout from '@/components/layout/layout';
@@ -9,6 +9,9 @@ import { InputField, SubmitButton } from '@/components/MuiComponents';
 import { Link, Typography } from '@mui/material';
 
 const LoginPage: React.FC = () => {
+
+  const [isLoading, setIsloading] = useState<boolean>(false);
+
   const initialValues = {
     email: '',
     password: '',
@@ -65,7 +68,7 @@ const LoginPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <SubmitButton text="Sign Up" disabled={isSubmitting} />
+                    <SubmitButton text="Sign Up" disabled={isSubmitting} loading={isLoading}/>
                   </div>
                   <Typography className="mt-5">
                     New user?{' '}

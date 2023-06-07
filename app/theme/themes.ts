@@ -7,7 +7,7 @@ export const darkTheme = createTheme({
   },
 });
 
-export const theme = createTheme({
+export const customTheme = createTheme({
   
   palette: {
     primary: {

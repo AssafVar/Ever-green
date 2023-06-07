@@ -1,6 +1,8 @@
 import { InputFieldProps, SubmitButtonProps } from '@/typings';
-import { Button, FormControl, TextField, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { FormControl, TextField, Typography } from '@mui/material';
 import React from 'react';
+import SendIcon from '@mui/icons-material/Send';
 
 
 export const InputField: React.FC<InputFieldProps> = ({
@@ -33,14 +35,15 @@ export const InputField: React.FC<InputFieldProps> = ({
   </FormControl>
 );
 
-export const SubmitButton: React.FC<SubmitButtonProps> = ({ disabled, text }) => (
-  <Button
+export const SubmitButton: React.FC<SubmitButtonProps> = ({ disabled, text, loading }) => (
+  <LoadingButton
     type="submit"
     className="w-full text-white py-2 px-4 rounded-md bg-indigo-500 hover:bg-indigo-600 transition duration-200"
     color='primary'
     variant="contained"
     disabled={disabled}
+    loading={loading}
   >
     {text}
-  </Button>
+  </LoadingButton>
 );

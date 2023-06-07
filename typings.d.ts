@@ -31,6 +31,7 @@ interface InputFieldProps extends FieldProps{
 interface SubmitButtonProps {
     text: string;
     disabled: boolean;
+    loading: boolean;
 }
 
 interface FormLine {

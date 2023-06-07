@@ -1,14 +1,25 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Layout from '@/components/layout/layout';
 import { Providers } from '@/components/Providers';
 import { InputField, SubmitButton } from '@/components/MuiComponents';
 import { Link, Typography } from '@mui/material';
+import { useMutation } from '@apollo/client';
+import { INSERT_USER } from '@/graphql/queries';
+import { customTheme } from '../theme/themes';
+import { useRouter } from 'next/navigation';
 
 const SignupPage: React.FC = () => {
+    const theme = customTheme;
+    const router = useRouter();
+
+    const [isLoading, setIsloading] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('');
+    const [successMessage, setSuccessMessage] = useState<string>('');
+
     const initialValues = {
         firstName: '',
         lastName: '',
@@ -21,18 +32,46 @@ const SignupPage: React.FC = () => {
         firstName: Yup.string().required('First name is required'),
         lastName: Yup.string().required('Last name is required'),
         password: Yup.string().required('Password is required')
-        .min(4, "Password must be at least 4 characters"),
+            .min(4, "Password must be at least 4 characters"),
         repassword: Yup.string()
             .oneOf([Yup.ref('password')], 'Passwords do not match')
             .required('Please re-enter your password'),
         email: Yup.string().email('Invalid email').required('Email is required'),
     });
-    
-    const handleSubmit = (values:any, { setSubmitting }:any) => {
+
+    const [insertUser, { data, error, loading }] = useMutation(INSERT_USER);
+
+    const handleSubmit = (values: any, { setSubmitting }: any) => {
         setSubmitting(false);
         console.log(values);
+        setIsloading(true);
+        insertUser({
+            variables: {
+                firstName: values.firstName,
+                lastName: values.lastName,
+                email: values.email,
+                password: values.password,
+                role: 'user',
+            }
+        }).then((response) => {
+            setIsloading(false);
+            setSuccessMessage('User successfully registered')
+            router.push('/');
+            
+        }).catch((error) => {
+            setIsloading(false);
+            if (error?.message === 'P2002') {
+                setErrorMessage('This email is already registered');
 
-      };
+            } else {
+                setErrorMessage(error.message);
+            }
+            setTimeout(() => {
+                setErrorMessage('');
+            }, 3000)
+        });
+
+    };
 
     return (
         <Providers>
@@ -84,7 +123,7 @@ const SignupPage: React.FC = () => {
                                             error={Boolean(errors.password && touched.password)}
                                             helperText={<ErrorMessage name="password" />}
                                             autoComplete="new-password"
-                                            />
+                                        />
                                     </div>
                                     <div>
                                         <Field
@@ -112,18 +151,30 @@ const SignupPage: React.FC = () => {
                                         />
                                     </div>
                                     <div>
-                                        <SubmitButton text="Sign Up" disabled={isSubmitting}/>
+                                        <SubmitButton text="Sign Up" disabled={isSubmitting} loading={isLoading} />
 
                                     </div>
                                 </Form>
                             )}
                         </Formik>
+                        {errorMessage && (
+                            <Typography variant="body1" color="error" className="mt-4">
+                                {errorMessage}
+                            </Typography>
+                        )}
+                        {successMessage && (
+                            <Typography variant="body1"
+                                sx={{ color: theme.palette.secondary.main }}
+                                color="warning" className="mt-4">
+                                {successMessage}
+                            </Typography>
+                        )}
                         <Typography className="mt-5">
-                    Already a user?{' '}
-                    <Link color="primary" href="/login">
-                      Login to your account
-                    </Link>
-                  </Typography>
+                            Already a user?{' '}
+                            <Link color="primary" href="/login">
+                                Login to your account
+                            </Link>
+                        </Typography>
                     </div>
                 </div>
             </Layout>

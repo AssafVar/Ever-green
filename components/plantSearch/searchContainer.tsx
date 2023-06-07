@@ -11,7 +11,7 @@ interface SearchContainerProps {
 const SearchContainer: React.FC<SearchContainerProps> = ({ updateSearch, searchText }) => {
 
   const [newSearchlist, setNewSearchList] = useState<any[]>([]);
-  const [isUnder600px, setIsUnder600px] = useState<boolean>(window.innerWidth < 650);
+  const [isUnder600px, setIsUnder600px] = useState<boolean>(false);
 
   const updateNewSearchList = (item: any) => {
     setNewSearchList(item);

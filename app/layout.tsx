@@ -1,6 +1,6 @@
 "use client";
 import "./globals.css";
-import { theme } from "./theme/themes";
+import { customTheme } from "./theme/themes";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { Providers } from "@/components/Providers";
 
@@ -17,7 +17,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <Providers>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={customTheme}>
           <CssBaseline />
           <body>{children}</body>
         </ThemeProvider>

@@ -25,7 +25,7 @@ export const typeDefs = `#graphql
     userSearches(userId:String!): [Search]
   }
   type Mutation {
-    addUser (firstName:String, lastName:String, password:String, email:String, role:String) : User
+    insertUser (firstName:String, lastName:String, password:String, email:String, role:String) : User!
     updateUser (id:ID!, firstName:String, lastName:String, email:String, role:String) : User
     deleteUser (id:ID!) : User
     insertSearch (id:String, userId:String, searchCode:String, searchString:String, createdAt:String) : Search
