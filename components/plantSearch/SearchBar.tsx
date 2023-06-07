@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useMutation } from "@apollo/client";
 import { INSERT_SEARCH } from "@/graphql/queries";
 import { nanoid } from "nanoid";

@@ -49,11 +49,12 @@ const SearchTextLine = ({ searchItem, updateSearch, updateSearchList }: SearchLi
                     <SearchText variant="subtitle1" title={searchItem.searchString} onClick={() => searchItem?.searchString && updateSearch(searchItem.searchString)}>
                         {searchItem.searchString}
                     </SearchText>
-                    {searchItem?.createdAt && <DateText variant="subtitle2" sx={{ fontSize: "10px" }}>
-                        {format(new Date(Number(searchItem?.createdAt)), 'dd/MM')}
-                    </DateText>}
+
                 </Box>
-                <div /* onMouseLeave={()=>setAnchorEl(null)} */>
+                <div className='flex items-center'>
+                {searchItem?.createdAt && <DateText variant="subtitle2" sx={{ fontSize: "10px" }}>
+                        {format(new Date(Number(searchItem?.createdAt)), 'dd/MM, hh:mm')}
+                    </DateText>}
                     <IconButton color={anchorEl ? 'primary' : 'default'}
                         aria-label="delete" onClick={(event) => setAnchorEl(event.currentTarget)} >
                         <DeleteIcon />

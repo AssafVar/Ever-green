@@ -17,8 +17,9 @@ const FlexContainer = styled('div')({
   '@media (max-width: 1200px)': {
     gridTemplateColumns: '1fr 9fr',
   },
-  '@media (max-width: 630px)': {
+  '@media (max-width: 650px)': {
     gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    display: 'flex',
     flexDirection: 'column',
     alignItems:'center',
   },
@@ -30,7 +31,7 @@ const LeftSideBox = styled('div')({
   '@media (max-width:1200px)':{
     width: '300px',
   },
-  '@media (max-width:630px)':{
+  '@media (max-width:650px)':{
   justifySelf: 'center',
   }
 })
