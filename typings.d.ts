@@ -6,6 +6,14 @@ interface INovel extends Novel {
     authors: Author[]
 }
 
+interface User {
+    firstName: string
+    lastName: string
+    password: string
+    email: string
+    role: string
+}
+
 interface Search {
     id: string,
     userId: string,

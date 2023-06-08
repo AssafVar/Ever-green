@@ -1,3 +1,5 @@
+import { generateToken } from "@/lib/jwt";
+import { User } from "@/typings";
 import { Prisma, PrismaClient } from "@prisma/client";
 
 export type Context = {
@@ -26,20 +28,27 @@ export const resolvers = {
   },
   Mutation: {
     insertUser: async (_: any, args: any, context: Context) => {
+      const user: User = {
+        firstName: args.firstName,
+        lastName: args.lastName,
+        email: args.email,
+        password: args.password,
+        role: args.role,
+      };
+  
       try {
-        return await context.prisma.user.create({
-          data: {
-            firstName: args.firstName,
-            lastName: args.lastName,
-            email: args.email,
-            password: args.password,
-            role: args.role,
-          },
+        const response = await context.prisma.user.create({
+          data: { ...user },
         });
-      } catch (err:any) {
+  
+        if (response) {
+          const token = generateToken(user);
+          return {token} ;
+        }
+      } catch (err: any) {
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
-          throw new Error(err.code)
-        };
+          throw new Error(err.code);
+        }
         throw new Error(err.message);
       }
     },

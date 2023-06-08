@@ -7,10 +7,12 @@ import Layout from '@/components/layout/layout';
 import { Providers } from '@/components/Providers';
 import { InputField, SubmitButton } from '@/components/MuiComponents';
 import { Link, Typography } from '@mui/material';
-import { useMutation } from '@apollo/client';
-import { INSERT_USER } from '@/graphql/queries';
 import { customTheme } from '../theme/themes';
 import { useRouter } from 'next/navigation';
+import { useMutation } from '@apollo/client';
+import { INSERT_USER } from '@/graphql/queries';
+import bcrypt from 'bcryptjs';
+
 
 const SignupPage: React.FC = () => {
     const theme = customTheme;
@@ -41,36 +43,41 @@ const SignupPage: React.FC = () => {
 
     const [insertUser, { data, error, loading }] = useMutation(INSERT_USER);
 
-    const handleSubmit = (values: any, { setSubmitting }: any) => {
+
+    const handleSubmit = async (values: any, { setSubmitting }: any) => {
         setSubmitting(false);
-        console.log(values);
         setIsloading(true);
-        insertUser({
-            variables: {
-                firstName: values.firstName,
-                lastName: values.lastName,
-                email: values.email,
-                password: values.password,
-                role: 'user',
+        const saltRounds = 10
+        try {
+            const hashPassword = await bcrypt.hash(values.password, saltRounds);
+            const token = await insertUser({
+                variables: {
+                    firstName: values.firstName,
+                    lastName: values.lastName,
+                    email: values.email,
+                    password: hashPassword,
+                    role: 'user',
+                }
+            });
+            if (token) {
+                setIsloading(false);
+                setSuccessMessage('User successfully registered');
+                setTimeout(() => {
+                    setSuccessMessage('');
+                    //router.push('/');
+                }, 1000)
             }
-        }).then((response) => {
-            setIsloading(false);
-            setSuccessMessage('User successfully registered')
-            router.push('/');
-            
-        }).catch((error) => {
-            setIsloading(false);
-            if (error?.message === 'P2002') {
-                setErrorMessage('This email is already registered');
-
-            } else {
-                setErrorMessage(error.message);
-            }
-            setTimeout(() => {
-                setErrorMessage('');
-            }, 3000)
-        });
-
+        }catch (error: any) {
+                setIsloading(false);
+                if (error?.message === 'P2002') {
+                    setErrorMessage('This email is already registered');
+                } else {
+                    setErrorMessage('Could not set submission');
+                }
+                setTimeout(() => {
+                    setErrorMessage('');
+                }, 3000)
+        }
     };
 
     return (
