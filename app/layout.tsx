@@ -3,6 +3,7 @@ import "./globals.css";
 import { customTheme } from "./theme/themes";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { Providers } from "@/components/Providers";
+import { UserContextProvider } from "@/components/contexts/userContext";
 
 export default function RootLayout({
   children,
@@ -19,7 +20,9 @@ export default function RootLayout({
       <Providers>
         <ThemeProvider theme={customTheme}>
           <CssBaseline />
-          <body>{children}</body>
+          <UserContextProvider>
+            <body>{children}</body>
+          </UserContextProvider>
         </ThemeProvider>
       </Providers>
     </html>

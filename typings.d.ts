@@ -46,3 +46,7 @@ interface FormLine {
     name: string;
     value: string;
 }
+type UserContextType = {
+    user: User|null;
+    setUser: (user: User) => void;
+  };
