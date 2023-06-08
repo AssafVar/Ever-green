@@ -3,25 +3,33 @@
 import { User } from "@/typings";
 import React, { createContext, useState } from "react";
 
-const initialState: User | null = null;
+const userInitialState: User | null = null;
+const tokenInitialState: String | null = null;
 
 export const userContext = createContext<{
   user: User | null;
+  token: string | null;
   setNewUser: (newUser: User) => void;
-}>({ user: initialState, setNewUser: () => null });
+  setNewToken: (token: string) => void;
+}>({ user: userInitialState, token: tokenInitialState, setNewUser: () => null, setNewToken: () => null });
 
 export const UserContextProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const [user, setUser] = useState<User|null>(null);
-  const setNewUser = (newUser:User) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+
+  const setNewUser = (newUser: User) => {
     setUser(newUser);
+  }
+  const setNewToken = (token: string) => {
+    setToken(token);
   }
 
   return (
-    <userContext.Provider value={{ user, setNewUser }}>
+    <userContext.Provider value={{ user, token, setNewToken, setNewUser }}>
       {children}
     </userContext.Provider>
   );

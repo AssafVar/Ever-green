@@ -1,31 +1,72 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Layout from '@/components/layout/layout';
 import { Providers } from '@/components/Providers';
 import { InputField, SubmitButton } from '@/components/MuiComponents';
 import { Link, Typography } from '@mui/material';
+import { useLazyQuery } from '@apollo/client';
+import { GET_USER_LOGIN } from '@/graphql/queries';
+import { userContext } from '@/components/contexts/userContext';
+import { customTheme } from '../theme/themes';
+import { useRouter } from 'next/navigation';
 
 const LoginPage: React.FC = () => {
 
+  const theme = customTheme;
+  const router = useRouter();
+  const { setNewUser, setNewToken } = useContext(userContext)
+
   const [isLoading, setIsloading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [successMessage, setSuccessMEssage] = useState<string>('');
 
   const initialValues = {
     email: '',
     password: '',
   };
 
+  const [loginQuery, { loading, error, data } ]= useLazyQuery(GET_USER_LOGIN, {
+    variables: {
+      email: initialValues.email,
+      password: initialValues.password,
+    },
+  });
   const validationSchema = Yup.object({
     password: Yup.string().required('Password is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
   });
 
-  const handleSubmit = (values: any, { setSubmitting }: any) => {
+  const handleSubmit = async (values: any, { setSubmitting }: any) => {
     setSubmitting(false);
-    console.log(values);
-
+    setIsloading(true);
+    try {
+      const { data } = await loginQuery({
+        variables: {
+          email: values.email,
+          password: values.password,
+        },
+      });
+      if (data?.userLogin?.token) {
+        setNewUser(data.user);
+        setNewToken(data.token);
+        setSuccessMEssage('You logged in successfully')
+        setTimeout(() => {
+          setSuccessMEssage('');
+          router.push('/')
+        }, 1000)
+        setIsloading(false);
+      }
+    } catch (error: any) {
+      console.log(error?.message);
+      setErrorMessage('error');
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 1000)
+      setIsloading(false);
+    }
   };
 
   return (
@@ -68,8 +109,20 @@ const LoginPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <SubmitButton text="Sign Up" disabled={isSubmitting} loading={isLoading}/>
+                    <SubmitButton text="Sign Up" disabled={false} loading={isLoading} />
                   </div>
+                  {errorMessage && (
+                    <Typography variant="body1" color="error" className="mt-4">
+                      {errorMessage}
+                    </Typography>
+                  )}
+                  {successMessage && (
+                    <Typography variant="body1"
+                      sx={{ color: theme.palette.secondary.main }}
+                      color="warning" className="mt-4">
+                      {successMessage}
+                    </Typography>
+                  )}
                   <Typography className="mt-5">
                     New user?{' '}
                     <Link color="primary" href="/signup">

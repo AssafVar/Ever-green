@@ -48,7 +48,24 @@ export const DELETE_ALL_SEARCH = gql`
 export const INSERT_USER = gql`
   mutation InsertUser($firstName: String, $lastName: String, $password: String, $email: String, $role: String) {
     insertUser(firstName: $firstName, lastName: $lastName, password: $password, email: $email, role: $role) {
-      token
+      status
     }
   }
+`
+
+export const GET_USER_LOGIN = gql`
+query loginUser($email: String!, $password: String!) {
+  userLogin(email: $email, password: $password) {
+    token
+    user {
+      id
+      firstName
+      lastName
+      email
+      password
+      role
+      createdAt
+    }
+  }
+}
 `

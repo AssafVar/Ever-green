@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { usePathname } from "next/navigation";
 import NavItem from "./NavItem";
 import {
@@ -11,8 +11,11 @@ import {
   Menu,
   MenuItem,
   Tooltip,
+  Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { User } from "@/typings";
+import { userContext } from "../contexts/userContext";
 
 const MENU_LIST = [
   { text: "Home", href: "/", tooltip: "Return to main page", id: '1' },
@@ -26,6 +29,8 @@ const REGISTER_LIST = [
 
 const Navbar = () => {
   const path = usePathname();
+  const { user }: { user: User | null } = useContext(userContext);
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
 
@@ -39,6 +44,7 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  console.log(user?.firstName);
   return (
     <AppBar position="static">
       <Toolbar>
@@ -59,8 +65,8 @@ const Navbar = () => {
           ))}
         </Box>
         <Box sx={{ flexGrow: 1 }} />
-        <div style={{ display: "flex", alignItems: "center" }}>
-
+        <div className='flex items-center flex-col'>
+          <Typography className="text-xs">{user?.firstName?user?.firstName:'newUser'}</Typography>
           <Tooltip title="Signup or Login">
             <IconButton
               edge="end"

@@ -1,6 +1,8 @@
 import { generateToken } from "@/lib/jwt";
 import { User } from "@/typings";
 import { Prisma, PrismaClient } from "@prisma/client";
+import bcrypt from 'bcryptjs'
+
 
 export type Context = {
   prisma: PrismaClient;
@@ -18,12 +20,31 @@ export const resolvers = {
         },
       });
     },
-    userSearches: async (_:any, args:any, context:Context) => {
+    userSearches: async (_: any, args: any, context: Context) => {
       return await context.prisma.search.findMany({
         where: {
           userId: args.userId,
         },
       });
+    },
+    userLogin: async (_: any, args: any, context: Context) => {
+      const { email, password } = args;
+      try {
+        const user: User | null = await context.prisma.user.findUnique({
+          where: {
+            email: email,
+          },
+        });
+        const isValid = await bcrypt.compare(password, user?.password ? user.password : '')
+        if (isValid) {
+          const token = user && generateToken(user);
+          return { token, user };
+        } else {
+          return { error: 'Wrong email or password' }
+        }
+      } catch (err: any) {
+        return { error: err.message }
+      }
     }
   },
   Mutation: {
@@ -35,15 +56,13 @@ export const resolvers = {
         password: args.password,
         role: args.role,
       };
-  
+
       try {
         const response = await context.prisma.user.create({
           data: { ...user },
         });
-  
         if (response) {
-          const token = generateToken(user);
-          return {token} ;
+          return { status: true };
         }
       } catch (err: any) {
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
@@ -75,11 +94,11 @@ export const resolvers = {
       try {
         return await context.prisma.search.create({
           data: {
-            id:args.id,
+            id: args.id,
             userId: args.userId,
             searchCode: args.searchCode,
             searchString: args.searchString,
-            createdAt:args.createdAt,
+            createdAt: args.createdAt,
           },
         });
       } catch (err) {
@@ -99,13 +118,13 @@ export const resolvers = {
           userId: args.userId,
         },
       });
-    
+
       await context.prisma.search.deleteMany({
         where: {
           userId: args.userId,
         },
       });
-    
+
       return deletedSearches;
     }
   },
