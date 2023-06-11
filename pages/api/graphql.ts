@@ -1,6 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
-import { prisma } from "@/prisma/db";
+import { prisma } from "@/lib/prisma/db";
 import { resolvers, Context } from "@/graphql/resolvers";
 import { typeDefs } from "@/graphql/schema";
 
