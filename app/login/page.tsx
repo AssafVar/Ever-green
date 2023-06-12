@@ -117,7 +117,7 @@ const LoginPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <SubmitButton text="Sign Up" disabled={false} loading={false} />
+                    <SubmitButton text="Sign Up" disabled={isSubmitting} loading={isLoading} />
                   </div>
                   {errorMessage && (
                     <Typography variant="body1" color="error" className="mt-4">
