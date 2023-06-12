@@ -12,6 +12,7 @@ import { GET_USER_LOGIN } from '@/graphql/queries';
 import { userContext } from '@/components/contexts/userContext';
 import { customTheme } from '../theme/themes';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 const LoginPage: React.FC = () => {
 
@@ -42,7 +43,14 @@ const LoginPage: React.FC = () => {
   const handleSubmit = async (values: any, { setSubmitting }: any) => {
     setSubmitting(false);
     setIsloading(true);
-    try {
+    const {email, password} = values;
+    try{
+      const response = await axios.post('api/user', {email, password});
+      console.log(response);
+    }catch(err){
+      console.log(err);
+    }
+    /* try {
       const { data } = await loginQuery({
         variables: {
           email: values.email,
@@ -66,7 +74,7 @@ const LoginPage: React.FC = () => {
         setErrorMessage('');
       }, 1000)
       setIsloading(false);
-    }
+    } */
   };
 
   return (
@@ -109,7 +117,7 @@ const LoginPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <SubmitButton text="Sign Up" disabled={false} loading={isLoading} />
+                    <SubmitButton text="Sign Up" disabled={false} loading={false} />
                   </div>
                   {errorMessage && (
                     <Typography variant="body1" color="error" className="mt-4">
