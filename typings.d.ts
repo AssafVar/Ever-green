@@ -14,6 +14,14 @@ interface User {
     role: string
 }
 
+interface UserInContext {
+    id: string
+    firstName: string
+    lastName: string
+    email: string
+    role: string
+}
+
 interface Search {
     id: string,
     userId: string,

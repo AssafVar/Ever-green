@@ -13,7 +13,7 @@ import { userContext } from '@/lib/contexts/userContext';
 import { customTheme } from '../theme/themes';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import { verifyToken } from '@/lib/jwt';
+import jwt_decode from 'jwt-decode';
 
 const LoginPage: React.FC = () => {
 
@@ -30,7 +30,7 @@ const LoginPage: React.FC = () => {
     password: '',
   };
 
-  const [loginQuery, { loading, error, data } ]= useLazyQuery(GET_USER_LOGIN, {
+  const [loginQuery, { loading, error, data }] = useLazyQuery(GET_USER_LOGIN, {
     variables: {
       email: initialValues.email,
       password: initialValues.password,
@@ -44,46 +44,22 @@ const LoginPage: React.FC = () => {
   const handleSubmit = async (values: any, { setSubmitting }: any) => {
     setSubmitting(false);
     setIsloading(true);
-    const {email, password} = values;
-    try{
-      const response:any = await axios.post('api/user', {email, password});
+    const { email, password } = values;
+    try {
+      const response: any = await axios.post('api/user', { email, password });
       console.log(response);
       setIsloading(false);
-      if (response?.status === 200 && response?.data?.token){
+      if (response?.status === 200 && response?.data?.token) {
+        const decodedToken: { id: string, firstName: string, lastName: string, role: string, email: string } = jwt_decode(response?.data?.token || '');
+        const { id, firstName, lastName, role, email } = decodedToken;
+        setNewUser({ id, firstName, lastName, role, email });
         setNewToken(response?.data?.token);
-        const user:any = await verifyToken(response?.data?.token);
-        console.log(user);
-        //router.push('/');
+        router.push('/');
       }
-    }catch(error:any){
+    } catch (error: any) {
       setErrorMessage(error?.response?.data?.error);
       setIsloading(false);
     }
-    /* try {
-      const { data } = await loginQuery({
-        variables: {
-          email: values.email,
-          password: values.password,
-        },
-      });
-      if (data?.userLogin?.token) {
-        setNewUser(data.user);
-        setNewToken(data.token);
-        setSuccessMEssage('You logged in successfully')
-        setTimeout(() => {
-          setSuccessMEssage('');
-          router.push('/')
-        }, 1000)
-        setIsloading(false);
-      }
-    } catch (error: any) {
-      console.log(error?.message);
-      setErrorMessage('error');
-      setTimeout(() => {
-        setErrorMessage('');
-      }, 1000)
-      setIsloading(false);
-    } */
   };
 
   return (
