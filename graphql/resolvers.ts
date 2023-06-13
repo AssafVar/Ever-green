@@ -1,11 +1,14 @@
-import { generateToken } from "@/lib/jwt";
+import { apolloMiddlewareGuard, generateToken } from "@/lib/jwt";
 import { User } from "@/typings";
 import { Prisma, PrismaClient } from "@prisma/client";
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcryptjs';
+const Cookies = require('cookies');
 
 
 export type Context = {
   prisma: PrismaClient;
+  req: any;
+  res: any;
 };
 
 export const resolvers = {
@@ -21,11 +24,17 @@ export const resolvers = {
       });
     },
     userSearches: async (_: any, args: any, context: Context) => {
-      return await context.prisma.search.findMany({
-        where: {
-          userId: args.userId,
-        },
-      });
+      const cookies = new Cookies(context.req, context.res);
+      try {
+        const user: any = await apolloMiddlewareGuard(cookies, 'token')
+        return await context.prisma.search.findMany({
+          where: {
+            userId: args.userId,
+          },
+        });
+      } catch (error) {
+        throw error;
+      }
     },
     userLogin: async (_: any, args: any, context: Context) => {
       const { email, password } = args;

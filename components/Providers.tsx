@@ -7,6 +7,11 @@ export const Providers = ({children}:{children :React.ReactNode}) => {
   const client = new ApolloClient({
     uri: "http://localhost:3000/api/graphql",
     cache: new InMemoryCache(),
+    credentials: 'same-origin'
   });
-  return <ApolloProvider client={client}>{children}</ApolloProvider>;
+  return (
+  <ApolloProvider client={client}>
+    {children}
+    </ApolloProvider>
+    );
 };
