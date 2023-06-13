@@ -9,10 +9,11 @@ import { InputField, SubmitButton } from '@/components/MuiComponents';
 import { Link, Typography } from '@mui/material';
 import { useLazyQuery } from '@apollo/client';
 import { GET_USER_LOGIN } from '@/graphql/queries';
-import { userContext } from '@/components/contexts/userContext';
+import { userContext } from '@/lib/contexts/userContext';
 import { customTheme } from '../theme/themes';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { verifyToken } from '@/lib/jwt';
 
 const LoginPage: React.FC = () => {
 
@@ -45,10 +46,18 @@ const LoginPage: React.FC = () => {
     setIsloading(true);
     const {email, password} = values;
     try{
-      const response = await axios.post('api/user', {email, password});
+      const response:any = await axios.post('api/user', {email, password});
       console.log(response);
-    }catch(err){
-      console.log(err);
+      setIsloading(false);
+      if (response?.status === 200 && response?.data?.token){
+        setNewToken(response?.data?.token);
+        const user:any = await verifyToken(response?.data?.token);
+        console.log(user);
+        //router.push('/');
+      }
+    }catch(error:any){
+      setErrorMessage(error?.response?.data?.error);
+      setIsloading(false);
     }
     /* try {
       const { data } = await loginQuery({

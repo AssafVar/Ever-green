@@ -34,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       return res.status(200).json({ status: "success", token });
     } else {
-      return res.status(402).end();
+      return res.status(402).send({status: "fail"});
     }
   } catch (error: any) {
     return res.status(500).send(error);

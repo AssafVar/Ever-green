@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { User } from "@/typings";
-import { userContext } from "../contexts/userContext";
+import { userContext } from "../../lib/contexts/userContext";
 
 const MENU_LIST = [
   { text: "Home", href: "/", tooltip: "Return to main page", id: '1' },

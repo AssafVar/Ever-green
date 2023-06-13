@@ -3,7 +3,7 @@ import "./globals.css";
 import { customTheme } from "./theme/themes";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { Providers } from "@/components/Providers";
-import { UserContextProvider } from "@/components/contexts/userContext";
+import { UserContextProvider } from "@/lib/contexts/userContext";
 
 export default function RootLayout({
   children,

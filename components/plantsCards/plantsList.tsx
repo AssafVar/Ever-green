@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import PlantCard from "./plantCard";
 import PlantDetails from "./plantDetails";
-import useFetch from "@/hooks/useFetch";
+import useFetch from "@/lib/hooks/useFetch";
 import QueryResult from "../query-result";
 import { HeaderContainer, MasonryContainer } from "./styles";
 
