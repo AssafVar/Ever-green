@@ -1,17 +1,15 @@
 "use client";
 
 import { User, UserInContext } from "@/typings";
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import Cookies from 'js-cookie';
 
 const userInitialState: UserInContext | null = null;
-const tokenInitialState: String | null = null;
 
 export const userContext = createContext<{
   user: UserInContext | null;
-  token: string | null;
   setNewUser: (newUser: UserInContext) => void;
-  setNewToken: (token: string) => void;
-}>({ user: userInitialState, token: tokenInitialState, setNewUser: () => null, setNewToken: () => null });
+}>({ user: userInitialState, setNewUser: () => null});
 
 export const UserContextProvider = ({
   children,
@@ -19,17 +17,18 @@ export const UserContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [user, setUser] = useState<UserInContext | null>(null);
-  const [token, setToken] = useState<string | null>(null);
 
   const setNewUser = (newUser: UserInContext) => {
     setUser(newUser);
   }
-  const setNewToken = (token: string) => {
-    setToken(token);
-  }
+  useEffect(() => {
+    const cookieValue = Cookies.get('user');
 
-  return (
-    <userContext.Provider value={{ user, token, setNewToken, setNewUser }}>
+    if (cookieValue) {
+      setNewUser(JSON.parse(cookieValue));
+    }
+  }, []);  return (
+    <userContext.Provider value={{ user, setNewUser }}>
       {children}
     </userContext.Provider>
   );

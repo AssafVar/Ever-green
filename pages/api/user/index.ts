@@ -26,10 +26,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const token = generateToken(user);
       const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
       const tokenMaxAge = JWT_EXPIRES_IN ? parseInt(JWT_EXPIRES_IN) * 60 : undefined;
-
+      const userToReturn = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+      }
       res.setHeader('Set-Cookie', [
+        `user=${JSON.stringify(userToReturn)}; Max-Age=${tokenMaxAge}; Path=/`,
         `token=${token}; HttpOnly; Secure; Max-Age=${tokenMaxAge}; Path=/`,
-        `logged-in=true; HttpOnly; Secure; Path=/`,
       ]);
 
       return res.status(200).json({ status: "success", token });

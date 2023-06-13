@@ -12,10 +12,14 @@ import {
   MenuItem,
   Tooltip,
   Typography,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { User } from "@/typings";
+import { UserInContext } from "@/typings";
 import { userContext } from "../../lib/contexts/userContext";
+import LogoutIcon from '@mui/icons-material/Logout';
+import axios from "axios";
+
 
 const MENU_LIST = [
   { text: "Home", href: "/", tooltip: "Return to main page", id: '1' },
@@ -29,7 +33,7 @@ const REGISTER_LIST = [
 
 const Navbar = () => {
   const path = usePathname();
-  const { user }: { user: User | null } = useContext(userContext);
+  const { user, setNewUser }: { user: UserInContext | null, setNewUser: (newUser: UserInContext | null) => void } = useContext(userContext);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
@@ -44,7 +48,15 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
-  console.log(user?.firstName);
+  const handleLogout = () => {
+    try{
+      axios.get('/api/auth/logout').then((response:any) => {
+        setNewUser(null);
+      })
+    }catch(err){
+      console.log(err)
+    }
+  }
   return (
     <AppBar position="static">
       <Toolbar>
@@ -66,31 +78,43 @@ const Navbar = () => {
         </Box>
         <Box sx={{ flexGrow: 1 }} />
         <div className='flex items-center flex-col'>
-          <Typography className="text-xs">{user?.firstName?user?.firstName:'newUser'}</Typography>
-          <Tooltip title="Signup or Login">
-            <IconButton
-              edge="end"
-              aria-label="menu"
-              aria-controls="menu"
-              aria-haspopup="true"
-              onClick={handleMenuOpen}
-              color={isOpenMenu ? "primary" : "inherit"}
-            >
-              <MenuIcon />
-            </IconButton>
-          </Tooltip>
-          <Menu
-            id="menu"
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-          >
-            {REGISTER_LIST.map((menu) => (
-              <MenuItem key={menu.id} onClick={handleMenuClose}>
-                <NavItem text={menu.text} href={menu.href} />
-              </MenuItem>
-            ))}
-          </Menu>
+          <Typography className="text-xs">{user && `Hi ${user.firstName} ${user.lastName}`}</Typography>
+          {user
+            ?
+            <Tooltip title="Logout">
+
+              <Button
+                variant="text"
+                color="inherit"
+                startIcon={<LogoutIcon />}
+                onClick={handleLogout}
+              />
+            </Tooltip>
+            :
+            <><Tooltip title="Signup or Login">
+              <IconButton
+                edge="end"
+                aria-label="menu"
+                aria-controls="menu"
+                aria-haspopup="true"
+                onClick={handleMenuOpen}
+                color={isOpenMenu ? "primary" : "inherit"}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Tooltip>
+              <Menu
+                id="menu"
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+              >
+                {REGISTER_LIST.map((menu) => (
+                  <MenuItem key={menu.id} onClick={handleMenuClose}>
+                    <NavItem text={menu.text} href={menu.href} />
+                  </MenuItem>
+                ))}
+              </Menu></>}
         </div>
       </Toolbar>
     </AppBar>
