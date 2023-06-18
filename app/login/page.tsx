@@ -14,6 +14,7 @@ import { customTheme } from '../theme/themes';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import Cookies from 'js-cookie';
 
 const LoginPage: React.FC = () => {
 
@@ -49,10 +50,11 @@ const LoginPage: React.FC = () => {
       const response: any = await axios.post('api/user', { email, password });
       console.log(response);
       setIsloading(false);
-      if (response?.status === 200 && response?.data?.token) {
-        const decodedToken: { id: string, firstName: string, lastName: string, role: string, email: string } = jwt_decode(response?.data?.token || '');
-        const { id, firstName, lastName, role, email } = decodedToken;
-        setNewUser({ firstName, lastName });
+      if (response?.status === 200 ) {
+        console.log(response.data);
+        const cookieValue = Cookies.get('user');
+        const { firstName, lastName, email } = cookieValue && JSON.parse(cookieValue);
+        setNewUser({ firstName, lastName, email });
         router.push('/');
       }
     } catch (error: any) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { User, UserInContext } from "@/typings";
+import { UserInContext } from "@/typings";
 import React, { createContext, useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 

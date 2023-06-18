@@ -17,6 +17,7 @@ interface User {
 interface UserInContext {
     firstName: string
     lastName: string
+    email: string
 }
 
 interface Search {

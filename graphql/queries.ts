@@ -58,13 +58,9 @@ query loginUser($email: String!, $password: String!) {
   userLogin(email: $email, password: $password) {
     token
     user {
-      id
       firstName
       lastName
       email
-      password
-      role
-      createdAt
     }
   }
 }

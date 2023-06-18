@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         `token=${token}; HttpOnly; Secure; Max-Age=${tokenMaxAge}; Path=/`,
       ]);
 
-      return res.status(200).json({ status: "success", token });
+      return res.status(200).json({ status: "success" });
     } else {
       return res.status(402).send({status: "fail"});
     }
