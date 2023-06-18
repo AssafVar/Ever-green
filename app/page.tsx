@@ -8,6 +8,7 @@ import PlantsCards from "@/components/plantsCards/plantsList";
 import { useState } from "react";
 import styled from "@emotion/styled";
 import SearchContainer from "@/components/plantSearch/searchContainer";
+import WithAuth from "@/components/auth/AuthChecker";
 
 const FlexContainer = styled('div')({
   display: 'grid',
@@ -21,18 +22,18 @@ const FlexContainer = styled('div')({
     gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
     display: 'flex',
     flexDirection: 'column',
-    alignItems:'center',
+    alignItems: 'center',
   },
-  marginBottom:'30px',
+  marginBottom: '30px',
 });
 
 const LeftSideBox = styled('div')({
   justifyContent: 'center',
-  '@media (max-width:1200px)':{
+  '@media (max-width:1200px)': {
     width: '300px',
   },
-  '@media (max-width:650px)':{
-  justifySelf: 'center',
+  '@media (max-width:650px)': {
+    justifySelf: 'center',
   }
 })
 
@@ -47,15 +48,17 @@ export default function Home() {
 
 
   return (
+    <WithAuth>
       <Providers>
         <Layout home={true}>
           <FlexContainer>
             <LeftSideBox >
               <SearchContainer updateSearch={updateSearch} searchText={searchText} />
             </LeftSideBox>
-              <PlantsCards name={searchText} />
+            <PlantsCards name={searchText} />
           </FlexContainer>
         </Layout>
       </Providers>
+    </WithAuth>
   );
 }

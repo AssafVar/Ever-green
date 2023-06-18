@@ -54,15 +54,12 @@ const Navbar = () => {
     try{
       axios.get('/api/auth/logout').then((response:any) => {
         setNewUser(null);
+        router.push('/login');
       })
     }catch(err){
       console.log(err)
     }
   }
-
-  useEffect(() =>{
-    !user && router.push('/login');
-  },[user]);
 
 
   return (
