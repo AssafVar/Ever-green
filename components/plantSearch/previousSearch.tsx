@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, FormControl, InputLabel, Select, Tooltip } from "@mui/material";
 import { useQuery } from "@apollo/client";
 import QueryResult from "../query-result";
@@ -7,6 +7,7 @@ import SearchTextLine from "./searchTextLine";
 import { NoSearchesText } from "./styles";
 import { Search } from "@/typings";
 import MenuIcon from "@mui/icons-material/Menu";
+import { userContext } from "@/lib/contexts/userContext";
 
 
 type PreviousSearchProps = {
@@ -19,16 +20,17 @@ type PreviousSearchProps = {
 
 const PreviousSearch = ({ updateSearch, updateNewSearchList, newSearchlist, updateSearchList, isUnder600px }: PreviousSearchProps) => {
 
+  const {user} = useContext(userContext);
   const { loading, error, data } = useQuery(GET_USER_SEARCHES, {
     variables: {
-      userId: "12",
+      email: user?.email,
     },
   });
 
 
   useEffect(() => {
-    data && updateNewSearchList(data?.userSearches);
-  }, [data]);
+    data && updateNewSearchList(data?.userSearches?.search);
+  }, [data,user]);
 
   return (
     <div>

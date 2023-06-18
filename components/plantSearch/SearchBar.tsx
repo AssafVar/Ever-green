@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   FormControl,
@@ -17,6 +17,7 @@ import { useMutation } from "@apollo/client";
 import { INSERT_SEARCH } from "@/graphql/queries";
 import { nanoid } from "nanoid";
 import { Search } from "@/typings";
+import { userContext } from "@/lib/contexts/userContext";
 
 const searchItems = [
   { name: "Common Name", value: "common_name", key: "1" },
@@ -29,6 +30,7 @@ type SearchBarProps = {
 };
 
 const SearchBar = ({ updateSearchList }: SearchBarProps) => {
+  const { user } = useContext(userContext);
   const [name, setName] = useState("");
   const [searchItem, setSearchItem] = useState({
     name: searchItems[0].name,
@@ -39,18 +41,20 @@ const SearchBar = ({ updateSearchList }: SearchBarProps) => {
 
   const handleNewSearch = async (item: { value: string; name: string }) => {
     try {
-      const variables = {
-        id: nanoid(),
-        userId: "12",
-        searchCode: item.value,
-        searchString: item.name,
-        createAt: new Date().toLocaleString(),
-      };
-      const response: any = await insertSearch({
-        variables: variables,
-      }).then(() => {
-        updateSearchList(variables, "insert");
-      });
+      if (user?.email){
+        const variables = {
+          id: nanoid(),
+          email: user.email,
+          searchCode: item.value,
+          searchString: item.name,
+          createAt: new Date().toLocaleString(),
+        };
+        await insertSearch({
+          variables: variables,
+        }).then(() => {
+          updateSearchList(variables, "insert");
+        });
+      }
     } catch (err) {
       console.log(err);
     }
@@ -82,8 +86,8 @@ const SearchBar = ({ updateSearchList }: SearchBarProps) => {
               },
               startAdornment: (
                 <InputAdornment position="start">
-                  <IconButton onClick={()=>fetchPlant()}>
-                  <SearchIcon />
+                  <IconButton onClick={() => fetchPlant()}>
+                    <SearchIcon />
                   </IconButton>
                 </InputAdornment>
               ),

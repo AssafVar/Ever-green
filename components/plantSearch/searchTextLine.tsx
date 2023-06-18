@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { IconButton, Menu, ListItemIcon } from "@mui/material";
 import { Box } from "@mui/system";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -7,6 +7,7 @@ import { useMutation } from '@apollo/client';
 import { DELETE_ALL_SEARCH, DELETE_SINGLE_SEARCH } from '@/graphql/queries';
 import { DateText, OptionText, RedListItemIcon, SearchItem, SearchText, StyledMenuItem } from './styles';
 import { Search } from '@/typings';
+import { userContext } from '@/lib/contexts/userContext';
 
 type SearchLineTextProps = {
     searchItem: Search,
@@ -15,6 +16,7 @@ type SearchLineTextProps = {
 }
 
 const SearchTextLine = ({ searchItem, updateSearch, updateSearchList }: SearchLineTextProps) => {
+    const {user} = useContext(userContext);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [onDeleteButton, setOnDeleteButton] = useState<string>('');
 
@@ -33,10 +35,10 @@ const SearchTextLine = ({ searchItem, updateSearch, updateSearchList }: SearchLi
             })
             : deleteAllSearchMutation({
                 variables: {
-                    userId: '12'
+                    email: user?.email
                 }
             }).then(() => {
-                updateSearchList('12', 'deleteAll');
+                updateSearchList('all', 'deleteAll');
             })
         updateSearchList
     };

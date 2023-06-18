@@ -19,21 +19,18 @@ const SearchContainer: React.FC<SearchContainerProps> = ({ updateSearch, searchT
   const updateSearchList = (item: Search | string, action: string) => {
     if (action === 'delete') {
       const newList = newSearchlist.filter((search: any) => {
-        return search.id !== item
+        return search.id !== item;
       });
       updateNewSearchList(newList);
     } else if (action === 'deleteAll') {
-      const newList = newSearchlist.filter((search: any) => {
-        return search.userId !== item
-      });
-      updateNewSearchList(newList);
+      updateNewSearchList([]);
     } else if (action === 'insert') {
       const newList = newSearchlist as Array<Search | any>;
       !!item && newList.push(item);
       typeof item !== 'string' && item?.searchString && updateSearch(item?.searchString)
       updateNewSearchList(newList);
     }
-  }
+  };
   useEffect(() => {
     updateSearchList(searchText, 'insert')
 
@@ -52,7 +49,7 @@ const SearchContainer: React.FC<SearchContainerProps> = ({ updateSearch, searchT
   return (
     <div className={`ml-4 ${isUnder600px && `flex items-center`}`}>
       <SearchBar updateSearchList={updateSearchList} />
-      <PreviousSearch updateSearchList={updateSearchList} updateSearch={updateSearch} newSearchlist={newSearchlist} updateNewSearchList={updateNewSearchList} isUnder600px={isUnder600px}/>
+      <PreviousSearch updateSearchList={updateSearchList} updateSearch={updateSearch} newSearchlist={newSearchlist} updateNewSearchList={updateNewSearchList} isUnder600px={isUnder600px} />
     </div>
   );
 }

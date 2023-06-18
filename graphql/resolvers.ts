@@ -2,6 +2,7 @@ import { apolloMiddlewareGuard, generateToken } from "@/lib/jwt";
 import { User } from "@/typings";
 import { Prisma, PrismaClient } from "@prisma/client";
 import bcrypt from 'bcryptjs';
+import { nanoid } from "nanoid";
 const Cookies = require('cookies');
 
 
@@ -27,9 +28,9 @@ export const resolvers = {
       const cookies = new Cookies(context.req, context.res);
       try {
         const user: any = await apolloMiddlewareGuard(cookies, 'token')
-        return await context.prisma.search.findMany({
+        return await context.prisma.user.findUnique({
           where: {
-            userId: args.userId,
+            email: args.email,
           },
         });
       } catch (error) {
@@ -101,10 +102,15 @@ export const resolvers = {
     },
     insertSearch: async (_: any, args: any, context: any) => {
       try {
+        const user = await context.prisma.user.findUnique({
+          where: {
+            email: args.email
+          }
+        });
         return await context.prisma.search.create({
           data: {
-            id: args.id,
-            userId: args.userId,
+            id: nanoid(),
+            userId: user.id,
             searchCode: args.searchCode,
             searchString: args.searchString,
             createdAt: args.createdAt,
@@ -122,19 +128,21 @@ export const resolvers = {
       });
     },
     deleteAllSearch: async (_: any, args: any, context: Context) => {
-      const deletedSearches = await context.prisma.search.findMany({
+      const user = await context.prisma.user.findUnique({
         where: {
-          userId: args.userId,
-        },
+          email: args.email
+        }
       });
+      if (user) {
+        await context.prisma.search.deleteMany({
+          where: {
+            userId: user.id,
+          },
+        });
+      }else{
+        throw new Error('Could not delete the searches.')
+      }
 
-      await context.prisma.search.deleteMany({
-        where: {
-          userId: args.userId,
-        },
-      });
-
-      return deletedSearches;
     }
   },
   User: {

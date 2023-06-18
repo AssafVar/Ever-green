@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const INSERT_SEARCH = gql`
-  mutation InsertSearch ($id:String, $userId: String!, $searchCode: String, $searchString: String, $createdAt: String){
-    insertSearch(id:$id, userId: $userId, searchCode: $searchCode, searchString: $searchString, createdAt: $createdAt) {
+  mutation InsertSearch ($email:String, $searchCode: String, $searchString: String, $createdAt: String){
+    insertSearch(email:$email, searchCode: $searchCode, searchString: $searchString, createdAt: $createdAt) {
       id
       userId
       searchCode
@@ -12,13 +12,15 @@ export const INSERT_SEARCH = gql`
   }
 `;
 export const GET_USER_SEARCHES = gql`
-  query userSearches ($userId: String!) {
-    userSearches(userId: $userId) {
-      id
-      userId
-      searchCode
-      searchString
-      createdAt
+  query UserSearches($email: String!) {
+    userSearches(email: $email) {
+      search {
+        id
+        userId
+        searchCode
+        searchString
+        createdAt
+      }
     }
   }
 `
@@ -35,8 +37,8 @@ export const DELETE_SINGLE_SEARCH = gql`
   }
 `
 export const DELETE_ALL_SEARCH = gql`
-  mutation DeleteAllSearch($userId: String!) {
-    deleteAllSearch(userId: $userId) {
+  mutation DeleteAllSearch($email: String!) {
+    deleteAllSearch(email: $email) {
       id
       userId
       searchCode

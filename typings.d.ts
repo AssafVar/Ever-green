@@ -22,7 +22,7 @@ interface UserInContext {
 
 interface Search {
     id: string,
-    userId: string,
+    email: string,
     searchCode: string | undefined,
     searchString?: string,
     createdAt?: string,

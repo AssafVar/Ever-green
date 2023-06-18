@@ -23,7 +23,7 @@ export const typeDefs = `#graphql
     users: [User]
     user(id:ID!): User
     userLogin(email:String!, password:String!): Token  
-    userSearches(userId:String!): [Search]
+    userSearches(email:String!): User
   }
 
   type Status {
@@ -39,8 +39,8 @@ export const typeDefs = `#graphql
     insertUser (firstName:String, lastName:String, password:String, email:String, role:String): Status
     updateUser (id:ID!, firstName:String, lastName:String, email:String, role:String) : User
     deleteUser (id:ID!) : User
-    insertSearch (id:String, userId:String, searchCode:String, searchString:String, createdAt:String) : Search
+    insertSearch (email:String searchCode:String, searchString:String, createdAt:String) : Search
     deleteSingleSearch (id:ID!) : Search
-    deleteAllSearch (userId:String!) : [Search]
+    deleteAllSearch (email:String!) : [Search]
   }
 `;
