@@ -31,7 +31,9 @@ const WithAuth = ({ children }: { children: React.ReactNode }) => {
 
             });
     }, []);
-
+    if (isAuth) {
+        return (<div>{children}</div>)
+    }
     if (loading) {
         return (
             <div>
@@ -40,10 +42,10 @@ const WithAuth = ({ children }: { children: React.ReactNode }) => {
                 </SpinnerContainer>
             </div>
         )
+    }else{
+        return <div>Something went wrong</div>
     }
-    if (isAuth) {
-        return (<div>{children}</div>)
-    }
+
 };
 
 export default WithAuth;
