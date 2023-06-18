@@ -5,11 +5,9 @@ import { Providers } from "@/components/Providers";
 import "../styles/globals.css";
 import "tailwindcss/tailwind.css";
 import PlantsCards from "@/components/plantsCards/plantsList";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "@emotion/styled";
 import SearchContainer from "@/components/plantSearch/searchContainer";
-import { useRouter } from "next/navigation";
-import { userContext } from "@/lib/contexts/userContext";
 
 const FlexContainer = styled('div')({
   display: 'grid',
@@ -41,18 +39,12 @@ const LeftSideBox = styled('div')({
 
 export default function Home() {
 
-  const router = useRouter();
-  const {user} = useContext(userContext);
-
   const [searchText, setSearchText] = useState('');
 
   const updateSearch = (text: string) => {
     setSearchText(text);
   }
 
-  useEffect(() =>{
-    !user && router.push('/login');
-  },[user]);
 
   return (
       <Providers>

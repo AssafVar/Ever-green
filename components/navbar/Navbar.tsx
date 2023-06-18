@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import NavItem from "./NavItem";
 import {
@@ -19,6 +19,7 @@ import { UserInContext } from "@/typings";
 import { userContext } from "../../lib/contexts/userContext";
 import LogoutIcon from '@mui/icons-material/Logout';
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 const MENU_LIST = [
@@ -33,6 +34,7 @@ const REGISTER_LIST = [
 
 const Navbar = () => {
   const path = usePathname();
+  const router = useRouter();
   const { user, setNewUser }: { user: UserInContext | null, setNewUser: (newUser: UserInContext | null) => void } = useContext(userContext);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -57,6 +59,12 @@ const Navbar = () => {
       console.log(err)
     }
   }
+
+  useEffect(() =>{
+    !user && router.push('/login');
+  },[user]);
+
+
   return (
     <AppBar position="static">
       <Toolbar>
