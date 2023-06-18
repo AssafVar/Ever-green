@@ -19,7 +19,7 @@ const LoginPage: React.FC = () => {
 
   const theme = customTheme;
   const router = useRouter();
-  const { setNewUser, setNewToken } = useContext(userContext)
+  const { setNewUser } = useContext(userContext)
 
   const [isLoading, setIsloading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -52,8 +52,7 @@ const LoginPage: React.FC = () => {
       if (response?.status === 200 && response?.data?.token) {
         const decodedToken: { id: string, firstName: string, lastName: string, role: string, email: string } = jwt_decode(response?.data?.token || '');
         const { id, firstName, lastName, role, email } = decodedToken;
-        setNewUser({ id, firstName, lastName, role, email });
-        setNewToken(response?.data?.token);
+        setNewUser({ firstName, lastName });
         router.push('/');
       }
     } catch (error: any) {

@@ -50,6 +50,7 @@ const SignupPage: React.FC = () => {
         const saltRounds = 10
         try {
             const hashPassword = await bcrypt.hash(values.password, saltRounds);
+            console.log(hashPassword);
             const token = await insertUser({
                 variables: {
                     firstName: values.firstName,
@@ -59,6 +60,7 @@ const SignupPage: React.FC = () => {
                     role: 'user',
                 }
             });
+            console.log(token);
             if (token) {
                 setIsloading(false);
                 setSuccessMessage('User successfully registered');

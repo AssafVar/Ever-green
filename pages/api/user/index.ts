@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma/db";
+import { prisma } from "@/prisma/db";
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from 'bcryptjs'
 import { generateToken } from "@/lib/jwt";

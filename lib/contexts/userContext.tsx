@@ -8,7 +8,7 @@ const userInitialState: UserInContext | null = null;
 
 export const userContext = createContext<{
   user: UserInContext | null;
-  setNewUser: (newUser: UserInContext) => void;
+  setNewUser: (newUser: UserInContext | null) => void;
 }>({ user: userInitialState, setNewUser: () => null});
 
 export const UserContextProvider = ({
@@ -18,7 +18,7 @@ export const UserContextProvider = ({
 }) => {
   const [user, setUser] = useState<UserInContext | null>(null);
 
-  const setNewUser = (newUser: UserInContext) => {
+  const setNewUser = (newUser: UserInContext | null) => {
     setUser(newUser);
   }
   useEffect(() => {
