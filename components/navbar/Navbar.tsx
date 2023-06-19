@@ -23,9 +23,11 @@ import { useRouter } from "next/navigation";
 
 
 const MENU_LIST = [
-  { text: "Home", href: "/", tooltip: "Return to main page", id: '1' },
-  { text: "About Us", href: "/about", tooltip: "Details about us", id: '2' },
-  { text: "Contact", href: "/contact", tooltip: "Feel free to contact", id: '3' },
+  { text: "Home", href: "/", tooltip: "Return to main page", id: '1', display:'all' },
+  { text: "About Us", href: "/about", tooltip: "Details about us", id: '2', display:'all' },
+  { text: "Contact", href: "/contact", tooltip: "Feel free to contact", id: '3', display:'all' },
+  { text: "Search", href: "/search", tooltip: "Search plants", id: '4', display:'user' },
+
 ];
 const REGISTER_LIST = [
   { text: "Signup", href: "/signup", id: '1' },
@@ -39,6 +41,7 @@ const Navbar = () => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
+  const [navList, setNavList] = useState<any[]>(MENU_LIST)
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setIsOpenMenu(true);
@@ -61,12 +64,29 @@ const Navbar = () => {
     }
   }
 
+  const filterNavList = () => {
+    let newNavList:any[] = [];
+    if(!user){
+      newNavList = MENU_LIST.filter((item) =>{
+        return item.display ==='all';
+      });
+    }else if(user){
+      newNavList = MENU_LIST.filter((item) =>{
+        return item;
+      }
+    )}
+    setNavList(newNavList);
+  };
+
+  useEffect(() => {
+    filterNavList();
+  },[user]);
 
   return (
     <AppBar position="static">
       <Toolbar>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          {MENU_LIST.map((menu) => (
+          {navList.map((menu) => (
             <div key={menu.id}>
               <Tooltip title={menu.tooltip}>
                 <Box

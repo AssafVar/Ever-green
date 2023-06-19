@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Circles } from "react-loader-spinner";
-import styled from '@emotion/styled';
+import { SpinnerContainer } from './styles';
 
 const WithAuth = ({ children }: { children: React.ReactNode }) => {
 
@@ -13,11 +13,9 @@ const WithAuth = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
 
     useEffect(() => {
-        console.log('in auth')
         axios
             .get('/api/auth/isAuth')
             .then((response) => {
-                console.log(response)
                 if (response.status !== 200) {
                     router.push('/login');
                 }
@@ -26,7 +24,6 @@ const WithAuth = ({ children }: { children: React.ReactNode }) => {
             })
             .catch((error) => {
                 router.push('/login');
-                console.log(error);
                 setLoading(false);
 
             });
@@ -49,10 +46,3 @@ const WithAuth = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default WithAuth;
-const SpinnerContainer = styled.div({
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "100vh",
-});

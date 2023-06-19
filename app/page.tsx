@@ -1,64 +1,17 @@
 "use client";
 
-import Layout from "@/components/layout/layout";
-import { Providers } from "@/components/Providers";
-import "../styles/globals.css";
-import "tailwindcss/tailwind.css";
-import PlantsCards from "@/components/plantsCards/plantsList";
-import { useState } from "react";
-import styled from "@emotion/styled";
-import SearchContainer from "@/components/plantSearch/searchContainer";
-import WithAuth from "@/components/auth/AuthChecker";
+import Layout from '@/components/layout/layout';
+import React from 'react';
 
-const FlexContainer = styled('div')({
-  display: 'grid',
-  gap: '16px',
-  flexDirection: 'column',
-  gridTemplateColumns: '1fr 4fr',
-  '@media (max-width: 1200px)': {
-    gridTemplateColumns: '1fr 9fr',
-  },
-  '@media (max-width: 650px)': {
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  marginBottom: '30px',
-});
-
-const LeftSideBox = styled('div')({
-  justifyContent: 'center',
-  '@media (max-width:1200px)': {
-    width: '300px',
-  },
-  '@media (max-width:650px)': {
-    justifySelf: 'center',
-  }
-})
-
-
-export default function Home() {
-
-  const [searchText, setSearchText] = useState('');
-
-  const updateSearch = (text: string) => {
-    setSearchText(text);
-  }
-
-
+const HomePage: React.FC = () => {
   return (
-    <WithAuth>
-      <Providers>
-        <Layout home={true}>
-          <FlexContainer>
-            <LeftSideBox >
-              <SearchContainer updateSearch={updateSearch} searchText={searchText} />
-            </LeftSideBox>
-            <PlantsCards name={searchText} />
-          </FlexContainer>
-        </Layout>
-      </Providers>
-    </WithAuth>
-  );
+    <Layout home={true}>
+      <div>
+        <h1>
+          Home page
+        </h1>
+      </div>
+    </Layout>
+  )
 }
+export default HomePage;

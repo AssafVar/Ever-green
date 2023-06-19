@@ -13,7 +13,6 @@ const useFetch = (url: string, name: string) => {
         const value = 'test';
         axios.post(url, { name, value })
             .then((res) => {
-                console.log(res);
                 setLoading(false);
                 setData(res.data);
             })
