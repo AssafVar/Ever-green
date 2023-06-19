@@ -2,7 +2,7 @@ import { InputFieldProps, SubmitButtonProps } from '@/typings';
 import { LoadingButton } from '@mui/lab';
 import { FormControl, TextField, Typography } from '@mui/material';
 import React from 'react';
-import SendIcon from '@mui/icons-material/Send';
+import customTheme from '@/app/theme/themes';
 
 
 export const InputField: React.FC<InputFieldProps> = ({
@@ -36,14 +36,20 @@ export const InputField: React.FC<InputFieldProps> = ({
 );
 
 export const SubmitButton: React.FC<SubmitButtonProps> = ({ disabled, text, loading }) => (
-  <LoadingButton
-    type="submit"
-    className="w-full text-white py-2 px-4 rounded-md bg-indigo-500 hover:bg-indigo-600 transition duration-200"
-    color='primary'
-    variant="contained"
-    disabled={disabled}
-    loading={loading}
-  >
-    {text}
-  </LoadingButton>
+<LoadingButton
+  type="submit"
+  className={`w-full py-2 px-4 rounded-md transition duration-200`}
+  color='primary'
+  variant="contained"
+  disabled={disabled}
+  loading={loading}
+  sx={{
+    backgroundColor: `${customTheme.palette.primary.main} !important`,
+    '&:hover': {
+      backgroundColor: `${customTheme.palette.primary.dark} !important`,
+    },
+  }}
+>
+  {text}
+</LoadingButton>
 );

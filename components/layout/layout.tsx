@@ -24,7 +24,7 @@ export default function Layout({
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
         <Navbar/>
-      <main className="mt-8">{children}</main>
+      <main className="mt-4">{children}</main>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">← Back to home page</Link>
